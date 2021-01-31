@@ -1,0 +1,40 @@
+http://localhost:1234/dokumento/standorte
+
+Insert mit postman
+
+POST Url:  http://seserver.ddnss.de:1234/dokumento/insert
+
+Im Body mit raw: { "ID": "123", "BEZ": "456", "GUELTIG": 1 }
+
+GET mit curl 
+
+curl -X GET -H "Content-Type: application/json" seserver.ddnss.de:1234/dokumento/standorte
+
+Insert mit Curl
+
+curl -X POST -H "Content-Type: application/json" -d "{\"id\":\"10\",\"bez\":\"12\",\"gueltig\":1}"  http://seserver.ddnss.de:4488/dokumento/insert
+
+curl -X GET -H "Content-Type: application/json" -d "{\"TABLE\":\"TSTANDORT\",\"CMD\":\"SELECT * FROM TSTANDORT WHERE BEZ LIKE '%T%'\", \"DATABASE\":\"D:/Data/DokuMents/DOKUMENTS30.FDB\",\"LOCATION\":\"LOCALHOST\",\"PORT\":3050}"  http://seserver.ddnss.de:4488/db/sql/get
+
+curl -X GET -H "Content-Type: application/json" -d "{\"TABLE\":\"TSTANDORT\",\"CMD\":\"SELECT * FROM TSTANDORT WHERE BEZ LIKE '%T%'\", \"DATABASE\":\"SYSDBA:masterkey@localhost:3050/D:/Data/DokuMents/DOKUMENTS30.FDB\"}"  http://seserver.ddnss.de:4488/db/sql/get
+
+
+
+curl -X GET -H "Content-Type: application/json" -d "{\"CMD\":\"SELECT NAME FROM TMEASHEAD\", \"DATABASE\":\"D:/Data/LAR/PPSDATAS304.FDB\",\"LOCATION\":\"LOCALHOST\",\"PORT\":3050}"  192.168.11.98:4488/db/sql/get
+
+curl -X GET -H "Content-Type: application/json" -d "{\"DATABASE\":\"D:/Data/LAR/PPSDATAS304.FDB\",\"LOCATION\":\"192.168.11.98\",\"PORT\":3050}"  192.168.11.98:4488/db/test
+
+curl -X GET -H "Content-Type: application/json" -d "{\"DATABASE\":\"D:/Data/DokuMents/DOKUMENTS30.FDB\",\"LOCATION\":\"localhost\",\"PORT\":3050}"  localhost:4488/db/test?param={\"LOCATION\":\"localhost\",\"PORT\":3050}
+
+
+curl -X GET -H "Content-Type: application/json" -d "{\"CMD\":\"SELECT * FROM TSTANDORTE\", \"DATABASE\":\"D:/Data/DokuMents/DOKUMENTS30.FDB\",\"LOCATION\":\"localhost\",\"PORT\":3050}"  localhost:4488/db/sql/get
+
+curl -X GET -H "Content-Type: application/json" -d "{\"DATABASE\":\"D:/Data/DokuMents/DOKUMENTS30.FDB\",\"LOCATION\":\"localhost\",\"PORT\":3050}"  seserver.ddnss.de:4488/db/sql/get?param={"CMD":"SELECT'BEZ'FROM'TSTANDORT"}
+
+curl -X GET -H "Content-Type: application/json" seserver.ddnss.de:4488/db/sql/get?param={"CMD":"SELECT'BEZ'FROM'TSTANDORT"},{"DATABASE":"D:/Data/DokuMents/DOKUMENTS30.FDB"},{"LOCATION":"localhost"},{"PORT":3050}
+
+Anfrage mit IExplorer
+
+http://seserver.ddnss.de:4488/db/sql/get?param=CMD:SELECT%20BEZ%20FROM%20TSTANDORT,DATABASE:D:/Data/DokuMents/DOKUMENTS30.FDB,LOCATION:localhost,PORT:3050
+http://seserver.ddnss.de:4488/db/sql/get?param=CMD:SELECT BEZ FROM TSTANDORT,DATABASE:D:/Data/DokuMents/DOKUMENTS30.FDB,LOCATION:localhost,PORT:3050
+http://seserver.ddnss.de:4488/db/sql/get?param=CMD:SELECT'BEZ'FROM'TSTANDORT,DATABASE:D:/Data/DokuMents/DOKUMENTS30.FDB,LOCATION:localhost,PORT:3050

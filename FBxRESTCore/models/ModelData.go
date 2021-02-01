@@ -20,7 +20,7 @@ type Db_init struct {
 
 
 func (model ModelGetData) GetSQLData(cmd string) (getStruct [] string, err error) {
-	const funcstr = "func GetSQLData"
+	const funcstr = "func models.GetSQLData"
     log.WithFields(log.Fields{"Getting data": cmd,	}).Debug(funcstr)
 	
 	row, err := model.DB.Query(cmd)
@@ -63,7 +63,7 @@ func (model ModelGetData) GetSQLData(cmd string) (getStruct [] string, err error
 }
 
 func (model ModelGetData) RunSQLData(cmd string) (getStruct [] string, err error) {
-	const funcstr = "func GetSQLData"
+	const funcstr = "func models.RunSQLData"
     log.WithFields(log.Fields{"Getting data": cmd,	}).Debug(funcstr)
 	
 	row, err := model.DB.Query(cmd)

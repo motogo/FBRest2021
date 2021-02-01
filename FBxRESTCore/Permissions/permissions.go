@@ -48,6 +48,8 @@ type Permissions struct {
 }
 
 func (r *repository) Add(userkey string,userpassword string, dbscheme string, ptype PermissionType) (ky Permission) {
+	const funcstr = "func _permissions.Add"	
+	
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	var data Permission
@@ -60,7 +62,8 @@ func (r *repository) Add(userkey string,userpassword string, dbscheme string, pt
 	*/
 	data.DBScheme = dbscheme
 	r.permissions[userkey] = data
-	log.WithFields(log.Fields{"Key": userkey,	}).Debug("func Add ")	
+	
+	log.WithFields(log.Fields{"userkey": userkey}).Debug(funcstr)
 	return data
 }
 
@@ -72,26 +75,30 @@ func (r *repository) Delete(token string) {
 }
 
 func (r *repository) Get(token string) (item Permission, err error ) {
+	const funcstr = "func _permissions.Get"	
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 	item, ok := r.permissions[token]
 	if !ok {
 		err = _apperrors.ErrPermissionKeyNotFound
-		log.WithFields(log.Fields{PermissionKeyStr+" not found": token,	}).Debug("func Get "+PermissionKeyStr)	
+		log.WithFields(log.Fields{PermissionKeyStr+" not found": token,	}).Debug(funcstr + " " + PermissionKeyStr)	
 		return item, err
 	}
-	log.WithFields(log.Fields{PermissionKeyStr+" found": token,	}).Debug("func Get "+PermissionKeyStr)	
+	log.WithFields(log.Fields{PermissionKeyStr+" found": token,	}).Debug(funcstr + " " + PermissionKeyStr)	
 	return item, nil
 }
 
 
 func (r *repository) Exists(token string) (bool) {
+	const funcstr = "func _permissions.Exists"	
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 	_, ok := r.permissions[token]
 	if !ok {
+		log.WithFields(log.Fields{"token not found": token,	}).Debug(funcstr)	
 		return false
 	}
+	log.WithFields(log.Fields{"token found": token,	}).Debug(funcstr)	
 	return true
 }
 
@@ -114,8 +121,8 @@ func Repository() *repository {
 //If permissions.DBPassword for this key is empty than will be set to userpassword
 //if permissions.Type is empty it will be set to none
 func GetPermissionFromRepository(userkey string, userpassword string, dbscheme string) (perm Permission, err error ) {
-	
-	log.WithFields(log.Fields{PermissionKeyStr: userkey,	}).Debug("func GetPermissionFromRepository")	
+	const funcstr = "func _permissions.GetPermissionFromRepository"	
+	log.WithFields(log.Fields{PermissionKeyStr: userkey,	}).Debug(funcstr)	
 	var rep = Repository() 
 	var result,err1 = rep.Get(userkey)	 
 	if(err1 != nil) {
@@ -143,11 +150,12 @@ func GetPermissionFromRepository(userkey string, userpassword string, dbscheme s
 }
 
 func ReadPermissions(pfile string) {
-	log.Debug("func ReadPermissions")
-	log.Info(log.GetLevel())
+	const funcstr = "func _permissions.ReadPermissions"	
+	log.WithFields(log.Fields{pfile: pfile,	}).Debug(funcstr)	
+	
 	data, err := ioutil.ReadFile(pfile)
     if err != nil {		
-		log.WithFields(log.Fields{"File reading error": err,	}).Error("func ReadPermissions")	
+		log.WithFields(log.Fields{"File reading error": err,	}).Error(funcstr)	
         return
     }
 	xdata := &Permissions{}
@@ -157,7 +165,7 @@ func ReadPermissions(pfile string) {
 		if(len(xd.UserKey) > 0) {				
 			if(!rep.Exists(xd.UserKey)) {
 				var itm = rep.Add(xd.UserKey, xd.UserPassword, xd.DBScheme, xd.Type)		
-				log.WithFields(log.Fields{"Added permission": "User key:"+itm.UserKey+" DBScheme:"+itm.DBScheme+" Permission:"+strconv.Itoa(int(itm.Type)),	}).Debug("func ReadPermissions")	
+				log.WithFields(log.Fields{"Added permission": "User key:"+itm.UserKey+" DBScheme:"+itm.DBScheme+" Permission:"+strconv.Itoa(int(itm.Type)),	}).Debug(funcstr)	
 			}
 		}
 	}  
@@ -166,6 +174,8 @@ func ReadPermissions(pfile string) {
 
 
 func WritePermissions(pfile string) {
+	const funcstr = "func _permissions.WritePermissions"	
+	log.WithFields(log.Fields{pfile: pfile,	}).Debug(funcstr)	
 	var data Permissions
 	var dt Permission
 	dt.UserKey = "superuser"

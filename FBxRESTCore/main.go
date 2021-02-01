@@ -66,7 +66,6 @@ func main() {
 		log.SetLevel(log.ErrorLevel)
 	}
 
-	log.Debug("Logging is debug")
 
 	_tests.Dummy()
 	//_tests.WriteGetUrlPayloadAttributesJson("tests/UrlPayloadAttributes.json")
@@ -80,7 +79,8 @@ func main() {
 	//_tests.WriteUrlSessionAttributesJson("tests/UrlSessionAttributes.json")
 
 	_permissions.ReadPermissions("appconfig/permissions.xml")
-	log.Debug("Create Router")
+	log.Debug("func main.Create Router")
+	log.Debug(" ")
 	router := mux.NewRouter()
 
 	router.HandleFunc("/{token}/rest/get/{table}", apis.GetTableData).Methods("GET")

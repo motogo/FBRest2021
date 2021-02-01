@@ -38,6 +38,8 @@ type repository struct {
 
 
 func (r *repository) Add(token string, permission _permissions.PermissionType, conn string) (ky Item) {
+	const funcStr = "func Sessions.Add"
+	
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	var data Item
@@ -47,15 +49,16 @@ func (r *repository) Add(token string, permission _permissions.PermissionType, c
 	data.Duration = MaxDuration
 	data.Permission = permission
 	r.items[token] = data
-	log.WithFields(log.Fields{SessionTokenStr: token,	}).Debug("func Add "+SessionTokenStr)	
+	log.WithFields(log.Fields{SessionTokenStr: token,	}).Debug(funcStr + " " + SessionTokenStr)	
 	return data
 }
 
 func (r *repository) AddStruct(data Item) (ky Item) {
+	const funcStr = "func Sessions.AddStruct"
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	r.items[data.Token] = data
-	log.WithFields(log.Fields{SessionTokenStr: data.Token,	}).Debug("func Add "+SessionTokenStr)	
+	log.WithFields(log.Fields{SessionTokenStr + "  ": data.Token,	}).Debug(funcStr + " " + SessionTokenStr)	
 	return data
 }
 
@@ -63,7 +66,7 @@ func (r *repository) Delete(token string) {
 	r.mu.Lock()
 	defer r.mu.Unlock()	
 	delete(r.items, token)
-	log.WithFields(log.Fields{SessionTokenStr: token,	}).Debug("func Delete "+SessionTokenStr)	
+	log.WithFields(log.Fields{SessionTokenStr + "  ": token,	}).Debug("func Delete "+SessionTokenStr)	
 }
 
 func (r *repository) Get(token string) (Item, error) {
@@ -124,6 +127,8 @@ func TokenValid(response http.ResponseWriter, key string) (kv Item) {
 }
 
 func WritePermanantSessions(pfile string) {
+	const funcStr = "func Sessions.WritePermanantSessions"
+	log.WithFields(log.Fields{pfile: pfile,	}).Debug(funcStr)	
 	var dataarr Sessions
 	var data Item
 
@@ -149,11 +154,13 @@ func WritePermanantSessions(pfile string) {
 }
 
 func ReadPermanantSessions(pfile string) {
-	const funcstr = "func ReadPermanantSessions"
-	log.Debug(funcstr);
+	
+	const funcStr = "func Sessions.ReadPermanantSessions"
+	log.WithFields(log.Fields{pfile: pfile,	}).Debug(funcStr)	
+	
 	dataarr, err := ioutil.ReadFile(pfile)
     if err != nil {		
-		log.WithFields(log.Fields{"File reading error": err,	}).Error(funcstr)	
+		log.WithFields(log.Fields{"File reading error": err,	}).Error(funcStr)	
         return
     }
 	//data := &[]Item{}
@@ -163,10 +170,10 @@ func ReadPermanantSessions(pfile string) {
 	for _, pars := range data.Session {
 		pars.Duration = pars.Duration * 1E9
 		log.Debug(" ")	
-		log.WithFields(log.Fields{"Read Token     :": pars.Token,}).Debug(funcstr)	
-		log.WithFields(log.Fields{"Read Connection:": pars.Value,}).Debug(funcstr)	
-		log.WithFields(log.Fields{"Read Start     :": pars.Start,}).Debug(funcstr)	
-		log.WithFields(log.Fields{"Read Duration  :": pars.Duration,}).Debug(funcstr)	
+		log.WithFields(log.Fields{"Read Token     ": pars.Token,}).Debug(funcStr)	
+		log.WithFields(log.Fields{"Read Connection": pars.Value,}).Debug(funcStr)	
+		log.WithFields(log.Fields{"Read Start     ": pars.Start,}).Debug(funcStr)	
+		log.WithFields(log.Fields{"Read Duration  ": pars.Duration,}).Debug(funcStr)	
 		
 		rep.AddStruct(pars)
 	}

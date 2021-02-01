@@ -28,7 +28,7 @@ import (
 //Returns respone for HTML site of FBRest usage
 func ResponseHelpHTML(w http.ResponseWriter, code int) {
 	
-	const funcstr = "func ResponseHelpHTML"
+	const funcstr = "func _functions.ResponseHelpHTML"
     log.Debug(funcstr)
 	profile := _struct.Profile{Appname:config.AppName,  Version:config.Version,Copyright:config.Copyright, Key:"-MNhE7Yf50sz6U9Hgqae", Duration:_sessions.MaxDuration}
 	fp := path.Join("templates", "index.html")
@@ -53,7 +53,7 @@ func ResponseHelpDesignHTML(w http.ResponseWriter, code int) {
 	m, _, err := image.Decode(reader)
 	defer reader.Close()
 */
-    const funcstr = "func ResponseHelpDesignHTML"
+    const funcstr = "func _functions.ResponseHelpDesignHTML"
     log.Debug(funcstr)
 	profile := _struct.Profile{Appname:config.AppName,  Version:config.Version,Copyright:config.Copyright, Key:"-MNhE7Yf50sz6U9Hgqae", Duration:_sessions.MaxDuration}
 	fp := path.Join("templates", "design.html")
@@ -68,7 +68,8 @@ func ResponseHelpDesignHTML(w http.ResponseWriter, code int) {
 	}
 }
 func ResponseHelpCommandsHTML(w http.ResponseWriter, code int) {
-	
+	const funcstr = "func _functions.ResponseHelpCommandsHTML"
+	log.Debug(funcstr)
 	profile := _struct.Profile{Appname:config.AppName,  Version:config.Version,Copyright:config.Copyright, Key:"-MNhE7Yf50sz6U9Hgqae", Duration:_sessions.MaxDuration}
 	fp := path.Join("templates", "commands.html")
 	tmpl, err := template.ParseFiles(fp)
@@ -83,7 +84,8 @@ func ResponseHelpCommandsHTML(w http.ResponseWriter, code int) {
 }
 
 func ResponseInfoBusyText(w http.ResponseWriter, code int) {
-	
+	const funcstr = "func _functions.ResponseInfoBusyText"
+	log.Debug(funcstr)
 	profile := _struct.Profile{Appname:config.AppName,  Version:config.Version,Copyright:config.Copyright, Key:"-MNhE7Yf50sz6U9Hgqae", Duration:_sessions.MaxDuration}
 	fp := path.Join("templates", "busy.html")
 	tmpl, err := template.ParseFiles(fp)
@@ -100,7 +102,7 @@ func ResponseInfoBusyText(w http.ResponseWriter, code int) {
 
 
 func OutParameters(entitiesData _struct.SQLAttributes) {
-	const funcstr = "func OutParameters"
+	const funcstr = "func _functions.OutParameters"
 	log.Debug(funcstr)
 	
 	log.WithFields(log.Fields{"Given command     ": entitiesData.Cmd,}).Info("")
@@ -109,7 +111,7 @@ func OutParameters(entitiesData _struct.SQLAttributes) {
 }
 
 func OutTableParameters(entitiesData _struct.GetTABLEAttributes) {
-	const funcstr = "func OutTableParameters"
+	const funcstr = "func _functions.OutTableParameters"
 	log.Debug(funcstr)
 	
 	log.WithFields(log.Fields{"Given fields      ": entitiesData.Fields,}).Info("")
@@ -120,8 +122,8 @@ func OutTableParameters(entitiesData _struct.GetTABLEAttributes) {
 }
 
 func GetSQLParamsFromBODY(r *http.Request , entitiesData *_struct.SQLAttributes) (bool) {
-	const funcstr = "func GetSQLParamsFromBODY"
-	log.Debug(funcstr) 
+	const funcstr = "func _functions.GetSQLParamsFromBODY"
+	log.WithFields(log.Fields{"body": r.Body}).Debug(funcstr)
 	var xdata _struct.GetUrlSQLAttributes
 	err2 := json.NewDecoder(r.Body).Decode(&xdata)
 	if err2 != nil {			
@@ -134,8 +136,9 @@ func GetSQLParamsFromBODY(r *http.Request , entitiesData *_struct.SQLAttributes)
 }
 
 func GetTableParamsFromBODY(r *http.Request , entitiesData *_struct.GetTABLEAttributes) (ok bool) {
-	const funcstr = "func GetTableParamsFromBODY"
-	log.Debug(funcstr) 
+	const funcstr = "func _functions.GetTableParamsFromBODY"
+	log.WithFields(log.Fields{"body": r.Body}).Debug(funcstr)
+	
 	var xdata _struct.GetUrlTABLEAttributes
 	err2 := json.NewDecoder(r.Body).Decode(&xdata)
 	if err2 != nil {			
@@ -152,8 +155,9 @@ func GetTableParamsFromBODY(r *http.Request , entitiesData *_struct.GetTABLEAttr
 }
 
 func GetFieldParamsFromBODY(r *http.Request , entitiesData *_struct.GetTABLEAttributes) (ok bool) {
-	const funcstr = "func GetFieldParamsFromBODY"
-	log.Debug(funcstr) 
+	const funcstr = "func _functions.GetFieldParamsFromBODY"
+	log.WithFields(log.Fields{"body": r.Body}).Debug(funcstr)
+	
 	var xdata _struct.GetUrlTABLEAttributes
 	err2 := json.NewDecoder(r.Body).Decode(&xdata)
 	if err2 != nil {			
@@ -171,6 +175,9 @@ func GetFieldParamsFromBODY(r *http.Request , entitiesData *_struct.GetTABLEAttr
 
 func GetSQLParamsFromURL(r *http.Request , entitiesData *_struct.SQLAttributes) (ok bool) {
 	const funcstr = "func GetSQLParamsFromURL"
+	
+	log.WithFields(log.Fields{"url": r.URL}).Debug(funcstr)
+	
 	var u = r.URL
 	
 	if(strings.HasPrefix(u.RawQuery,_struct.FormatJson)) {			

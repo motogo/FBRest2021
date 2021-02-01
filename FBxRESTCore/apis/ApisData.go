@@ -18,8 +18,9 @@ import (
 )
 
 func TestDBOpenClose(response http.ResponseWriter, r *http.Request) {
-
-	log.WithFields(log.Fields{"URL": r.URL,	}).Info("func TestDBOpenClose")
+	const funcStr = "func apis.TestDBOpenClose"
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcStr)
+	
 	var key = _functions.GetLeftPathSliceFromURL(r,0)	
 	var kv  = _sessions.TokenValid(response, key)
 	if(!kv.Valid) {
@@ -47,8 +48,8 @@ func TestDBOpenClose(response http.ResponseWriter, r *http.Request) {
 
 
 func TestSQLResponse(response http.ResponseWriter, r *http.Request) {
-
-	log.WithFields(log.Fields{"URL": r.URL,	}).Debug("func TestSQLResponse")
+	const funcStr = "func apis.TestSQLResponse"
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcStr)
 	
 	var Response _struct.ResponseData
 	var entitiesData _struct.SQLAttributes
@@ -66,8 +67,8 @@ func TestSQLResponse(response http.ResponseWriter, r *http.Request) {
 }
 
 func TestTABLEResponse(response http.ResponseWriter, r *http.Request) {
-
-	log.WithFields(log.Fields{"URL": r.URL,	}).Debug("func TestSQLResponse")
+	const funcStr = "func apis.TestTABLEResponse"
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcStr)
 	
 	var Response _struct.ResponseData
 	var entitiesData _struct.GetTABLEAttributes
@@ -83,7 +84,8 @@ func TestTABLEResponse(response http.ResponseWriter, r *http.Request) {
 }
 
 func GetSessionKey(response http.ResponseWriter, r *http.Request) {
-	
+	const funcStr = "func apis.GetSessionKey"
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcStr)
 	var dbData _dbscheme.GetUrlSessionSchemeAttributes
 
 	
@@ -160,19 +162,23 @@ func GetSessionKeyOLD(response http.ResponseWriter, r *http.Request) {
 }
 */
 func GetHelp(response http.ResponseWriter, r *http.Request) {
-
+	const funcStr = "func apis.GetHelp"
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcStr)
 	_functions.ResponseHelpHTML(response, http.StatusOK)
 }
 func GetHelpDesign(response http.ResponseWriter, r *http.Request) {
-
+	const funcStr = "func apis.GetHelpDesign"
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcStr)
 	_functions.ResponseHelpDesignHTML(response, http.StatusOK)
 }
 func GetHelpCommands(response http.ResponseWriter, r *http.Request) {
-
+	const funcStr = "func apis.GetHelpCommands"
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcStr)
 	_functions.ResponseHelpCommandsHTML(response, http.StatusOK)
 }
 func DeleteSessionKey(response http.ResponseWriter, r *http.Request) {
-	
+	const funcStr = "func apis.DeleteSessionKey"
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcStr)
 	var key = _functions.GetLeftPathSliceFromURL(r,0)
 	var Response _struct.ResponseData								
 	var rep = _sessions.Repository() 
@@ -228,8 +234,9 @@ func SetSessionKey(response http.ResponseWriter, r *http.Request) {
 //    Info     -> info string wich can be used to check weather response of REST api is working
 //    Cmd      -> SQL command
 func GetSQLData(response http.ResponseWriter, r *http.Request) {
-    const funcStr = "func AoisData.GetSQLData"
+    const funcStr = "func apis.GetSQLData"
 	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcStr)
+	
 	
 	var key = _functions.GetLeftPathSliceFromURL(r,0)
 	var kv  = _sessions.TokenValid(response, key)
@@ -273,8 +280,9 @@ func GetSQLData(response http.ResponseWriter, r *http.Request) {
 // localhost:4488/token/rest/get/TSTANDORT?fjson="{"fields":["id","bez"]},{"order":["bez asc","id desc"]},{"filter":"BEZ like 'T%'"},{"group":["id","bez"]}"</li>
 func GetTableData(response http.ResponseWriter, r *http.Request) {
 
-
-	log.WithFields(log.Fields{"URL": r.URL,	}).Debug("func GetTableData")
+	const funcstr = "func apis.GetTableData"			
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcstr)
+	
 	
 	var key = _functions.GetLeftPathSliceFromURL(r,0)
 	var kv  = _sessions.TokenValid(response, key)
@@ -336,8 +344,8 @@ func GetTableData(response http.ResponseWriter, r *http.Request) {
 
 func GetTableFieldData(response http.ResponseWriter, r *http.Request) {
 
-
-	log.WithFields(log.Fields{"URL": r.URL,	}).Debug("func GetTableData")
+	const funcstr = "func apis.GetTableFieldData"			
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcstr)
 	
 	var key = _functions.GetLeftPathSliceFromURL(r,0)
 	var kv  = _sessions.TokenValid(response, key)
@@ -403,6 +411,8 @@ func GetTableFieldData(response http.ResponseWriter, r *http.Request) {
 }
 
 func IsBrowser(ua string) (bool) {
+	const funcstr = "func apis.IsBrowser"		
+	log.WithFields(log.Fields{"ua": ua,	}).Debug(funcstr)
 	if(strings.Contains(ua, "curl") || strings.Contains(ua, "Postman")) {
 		return false
 	}
@@ -410,6 +420,8 @@ func IsBrowser(ua string) (bool) {
 }
 
 func UpdateTableDataGET(response http.ResponseWriter, r *http.Request) {
+	const funcstr = "func apis.UpdateTableDataGET"		
+	log.Debug(funcstr)
 	var ua = r.Header.Get("User-Agent")
 	if(!IsBrowser(ua)) {
 		var Response _struct.ResponseData	
@@ -425,6 +437,8 @@ func UpdateTableDataGET(response http.ResponseWriter, r *http.Request) {
 }
 
 func InsertTableDataGET(response http.ResponseWriter, r *http.Request) {
+	const funcstr = "func apis.InsertTableDataGET"		
+	log.Debug(funcstr)
 	var ua = r.Header.Get("User-Agent")
 	if(!IsBrowser(ua)) {
 		var Response _struct.ResponseData	
@@ -442,8 +456,9 @@ func InsertTableDataGET(response http.ResponseWriter, r *http.Request) {
 func UpdateTableData(response http.ResponseWriter, r *http.Request) {
 
 	// http://localhost:4488/{{.Key}}/rest/put/TSTANDORT?payload=(username='admin', email='email@example.org')&filter=(id=1)
-
-	log.WithFields(log.Fields{"URL": r.URL,	}).Debug("func GetTableData")
+	const funcstr = "func apis.UpdateTableData"		
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcstr)
+	
 	
 	var key = _functions.GetLeftPathSliceFromURL(r,0)
 	var kv  = _sessions.TokenValid(response, key)
@@ -506,20 +521,22 @@ func UpdateTableData(response http.ResponseWriter, r *http.Request) {
 func InsertTableData(response http.ResponseWriter, r *http.Request) {
 
 	// http://localhost:4488/{{.Key}}/rest/put/TSTANDORT?payload=(username='admin', email='email@example.org')&filter=(id=1)
-
-	log.WithFields(log.Fields{"URL": r.URL,	}).Debug("func InsertTableData")
+	const funcstr = "func apis.ReadDBScheme"		
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcstr)
 	
 	var key = _functions.GetLeftPathSliceFromURL(r,0)
-	log.Debug("vor token")
+	
 	var kv  = _sessions.TokenValid(response, key)
-	log.Debug("after token")
-	if(!kv.Valid) {
-		log.Debug("token not valid")
+	
+	if(!kv.Valid) {	
+		log.WithFields(log.Fields{"token not valid": key,	}).Debug(funcstr)
 		return
 	}
-	log.Debug("TokeValid")
-	log.Debug(_permissions.Read)
-	log.Debug(kv.Permission)
+	
+	log.WithFields(log.Fields{"token valid": key,	}).Debug(funcstr)
+	log.WithFields(log.Fields{"_permissions.Read": _permissions.Read,	}).Debug(funcstr)
+	log.WithFields(log.Fields{"kv.Permission": kv.Permission,	}).Debug(funcstr)
+	
 	var Response _struct.ResponseData
 	if(kv.Permission < _permissions.Read) {
 		Response.Status  = http.StatusNotFound
@@ -530,7 +547,7 @@ func InsertTableData(response http.ResponseWriter, r *http.Request) {
 	}
 
 	var entitiesData _struct.FIELDVALUEAttributes
-	log.Debug(entitiesData)
+	
 	var table = _functions.GetRightPathSliceFromURL(r,0)
 	entitiesData.Table = table
 	
@@ -576,7 +593,10 @@ func InsertTableData(response http.ResponseWriter, r *http.Request) {
 
 
 func DeleteTableDataGET(response http.ResponseWriter, r *http.Request) {
+	const funcstr = "func apis.DeleteTableDataGET"		
+	log.Debug(funcstr)
 	var ua = r.Header.Get("User-Agent")
+	
 	if(!IsBrowser(ua)) {
 		var Response _struct.ResponseData	
 		Response.Status  = http.StatusNotFound
@@ -589,8 +609,8 @@ func DeleteTableDataGET(response http.ResponseWriter, r *http.Request) {
 	DeleteTableData(response, r)
 }
 func DeleteTableData(response http.ResponseWriter, r *http.Request) {
-
-	log.WithFields(log.Fields{"URL": r.URL,	}).Debug("func DeleteTableData")
+	const funcstr = "func apis.DeleteTableData"	
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcstr)
 	
 	var key = _functions.GetLeftPathSliceFromURL(r,0)
 	var kv  = _sessions.TokenValid(response, key)
@@ -648,13 +668,16 @@ func DeleteTableData(response http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteTableFieldDataGET(response http.ResponseWriter, r *http.Request) {
+	const funcstr = "func apis.DeleteTableFieldDataGET"	
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcstr)
 	r.Method = "POST"
 	DeleteTableFieldData(response, r)
 }
 
 func DeleteTableFieldData(response http.ResponseWriter, r *http.Request) {
-
-	log.WithFields(log.Fields{"URL": r.URL,	}).Debug("func DeleteTableFieldData")
+	const funcstr = "func apis.DeleteTableFieldData"	
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcstr)
+	
 	
 	var key = _functions.GetLeftPathSliceFromURL(r,0)
 	var kv  = _sessions.TokenValid(response, key)

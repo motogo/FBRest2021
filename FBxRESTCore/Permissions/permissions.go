@@ -55,11 +55,7 @@ func (r *repository) Add(userkey string,userpassword string, dbscheme string, pt
 	var data Permission
 	data.UserKey  = userkey
 	data.UserPassword  = userpassword
-	data.Type = ptype
-	/*
-	data.DBUser = dbuser
-	data.DBPassword = dbuserpassword
-	*/
+	data.Type = ptype	
 	data.DBScheme = dbscheme
 	r.permissions[userkey] = data
 	

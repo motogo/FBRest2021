@@ -31,9 +31,7 @@ func WriteDefaultDBScheme(pfile string) {
 	data.Location = "192.168.12.99"
 	data.Database = "D:/Data/LAR/HEALTHDATAS304.FDB"
 	data.Port = 3050
-
 	dataarr = append(dataarr, data)
-
 	data.Name = "health ffm1"
 	data.Key = "health_ffm1"
 	data.Password = "masterkey"
@@ -41,7 +39,6 @@ func WriteDefaultDBScheme(pfile string) {
 	data.Location = "192.168.11.98"
 	data.Database = "D:/Data/LAR/HEALTHDATAS304.FDB"
 	data.Port = 3050
-
 	dataarr = append(dataarr, data)
 
 	file, _ := xml.MarshalIndent(dataarr, "", " ")
@@ -138,8 +135,7 @@ func Repository() *repository {
 
 func GetSchemeFromRepository(dbscheme string) (perm DatabaseAttributes, err error) {
 	const funcstr = "func _dbscheme.ReadDBScheme"	
-	log.WithFields(log.Fields{"dbscheme": dbscheme}).Debug(funcstr)
-	//log.WithFields(log.Fields{DBSchemeKeyStr: dbscheme}).Debug("func GetSchemeFromRepository")
+	log.WithFields(log.Fields{"dbscheme": dbscheme}).Debug(funcstr)	
 	var rep = Repository()
 	var result, err1 = rep.Get(dbscheme)
 	if err1 != nil {
@@ -150,8 +146,7 @@ func GetSchemeFromRepository(dbscheme string) (perm DatabaseAttributes, err erro
 
 func ReadDBScheme(pfile string) {
 	const funcstr = "func _dbscheme.ReadDBScheme"	
-	log.WithFields(log.Fields{"pfile": pfile}).Debug(funcstr)
-	//log.Info(log.GetLevel())
+	log.WithFields(log.Fields{"pfile": pfile}).Debug(funcstr)	
 	data, err := ioutil.ReadFile(pfile)
 	if err != nil {
 		log.WithFields(log.Fields{"File reading error": err}).Error("funcstr")

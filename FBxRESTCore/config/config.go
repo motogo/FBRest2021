@@ -4,8 +4,7 @@ import ("database/sql"
 		"strconv"
 		_sessions "fbrest/FBxRESTCore/sessions"
 		_"github.com/nakagami/firebirdsql"
-		log "github.com/sirupsen/logrus"
-		//_struct "fbrest/FBxRESTCore/struct"
+		log "github.com/sirupsen/logrus"		
 		_dbscheme "fbrest/FBxRESTCore/dbscheme"
 )
 
@@ -44,7 +43,6 @@ func MakeConnectionString(port int,location string, filename string, user string
 
 func ConnLocation(port int,location string, filename string, user string, password string) (db *sql.DB, err error) {
    
-
     var connstr = MakeConnectionString(port,location, filename , user , password)	
 	return ConnLocationWithString(connstr)
 }
@@ -67,8 +65,6 @@ func ConnLocationWithSession(kv _sessions.Item) (db *sql.DB, err error) {
 	}
 	return
 }
-
-
 
 func TestConnLocation(connstr string) (err error) {
     

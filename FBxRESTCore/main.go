@@ -107,6 +107,7 @@ func main() {
 	router.HandleFunc("/api/help", apis.GetHelp).Methods("GET")
 	router.HandleFunc("/api/help/design", apis.GetHelpDesign).Methods("GET")
 	router.HandleFunc("/api/help/commands", apis.GetHelpCommands).Methods("GET")
+	router.HandleFunc("/api/help/data", apis.GetDataHtml).Methods("GET")
 
 	log.Info(config.AppName + " " + config.Copyright)
 	log.Info(" ")

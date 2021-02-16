@@ -4,7 +4,7 @@
   <Value>SYSDBA:masterkey@localhost:3050/D:/Data/LAR/HEALTHDATAS304.FDB</Value>
   <Permission>9</Permission>
   <Start>2020-12-15T23:02:12.8305516+01:00</Start>
-  <Duration>100000</Duration>
+  <Duration>31536000</Duration>
   <Valid>true</Valid>
  </Session>
  <Session>

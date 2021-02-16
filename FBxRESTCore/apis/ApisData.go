@@ -122,50 +122,20 @@ func GetSessionKey(response http.ResponseWriter, r *http.Request) {
 	_httpstuff.RestponWithJson(response, http.StatusOK, Response)
 	
 }
-/*
-func GetSessionKeyOLD(response http.ResponseWriter, r *http.Request) {
-	
-	var dbData _struct.DatabaseAttributes
 
-	dbData.Location = "localhost"	
-	dbData.Port = 3050
-	dbData.Password = "masterkey"
-	dbData.User = "SYSDBA"
-	
-	var Response _struct.ResponseData
-		
-	if(!_functions.GetSessionParamsFromURL(r , &dbData)) {
-		_functions.GetSessionParamsFromBODY(r , &dbData)
-	}
-
-	id := bguuid.New()				
-		
-	var rep = _sessions.Repository() 
-	var perm,errperm = _permissions.GetPermissionFromRepository(dbData.User,dbData.Password)
-	if(errperm != nil) {
-		Response.Status  = http.StatusNotFound
-		Response.Message = errperm.Error()
-		Response.Data    = _apperrors.DataNil
-		_httpstuff.RestponWithJson(response, http.StatusOK, Response)
-		return
-	}
-
-	
-	var connstr = string(perm.DBUser+":"+perm.DBPassword+"@"+dbData.Location+":"+strconv.Itoa(dbData.Port)+"/"+dbData.Database)		
-
-	var itm = rep.Add(string(id),perm.Type,connstr)
-	Response.Status  = http.StatusOK
-	Response.Message = "Created token for permission:"+strconv.Itoa(int(perm.Type)) +", duration:"+ itm.Duration.String()
-	Response.Data    =  string(id)
-	_httpstuff.RestponWithJson(response, http.StatusOK, Response)
-	
-}
-*/
 func GetHelp(response http.ResponseWriter, r *http.Request) {
 	const funcStr = "func apis.GetHelp"
 	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcStr)
 	_functions.ResponseHelpHTML(response, http.StatusOK)
 }
+func GetDataHtml(response http.ResponseWriter, r *http.Request) {
+	const funcStr = "func apis.GetHelp"
+	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcStr)
+	_functions.ResponseDataHTML(response, http.StatusOK)
+}
+
+
+
 func GetHelpDesign(response http.ResponseWriter, r *http.Request) {
 	const funcStr = "func apis.GetHelpDesign"
 	log.WithFields(log.Fields{"URL": r.URL,	}).Debug(funcStr)
@@ -188,41 +158,7 @@ func DeleteSessionKey(response http.ResponseWriter, r *http.Request) {
 	Response.Data    =  key
 	_httpstuff.RestponWithJson(response, http.StatusOK, Response)			
 }
-/*
-func SetSessionKeyGET(response http.ResponseWriter, r *http.Request) {
-	r.Method = "POST"
-	SetSessionKey(response, r)
-}
 
-func SetSessionKey(response http.ResponseWriter, r *http.Request) {
-	
-	var dbData _dbscheme.GetUrlSessionSchemeAttributes
-
-	
-
-	var key = _functions.GetLeftPathSliceFromURL(r,0)
-	_functions.GetSessionSchemeParamsFromURL(r , &dbData)		
-	var Response _struct.ResponseData								
-	var rep = _sessions.Repository()
-	
-	var cmd string = config.MakeConnectionStringFromStruct(dbData)
-	var perm,errperm = _permissions.GetPermissionFromRepository(dbData.User,dbData.Password,dbData.DBScheme )
-	if(errperm != nil) {
-		Response.Status  = http.StatusOK
-		Response.Message = errperm.Error()
-		Response.Data    = _apperrors.DataNil
-		_httpstuff.RestponWithJson(response, http.StatusOK, Response)
-		return
-	}
-	rep.Add(key,perm.Type,cmd)
-	
-	Response.Status  = http.StatusOK
-	Response.Message = "Set " + _sessions.SessionTokenStr
-	Response.Data    =  key
-	_httpstuff.RestponWithJson(response, http.StatusOK, Response)
-			
-}
-*/
 // GetSQLData returns result rows in json format from an given sql statement.
 // The attribute can be given by body or url of statement.
 // Following attributes are possible:
@@ -270,7 +206,7 @@ func GetSQLData(response http.ResponseWriter, r *http.Request) {
 			Response.Status  = http.StatusOK
 			Response.Message = "Got datas"
 			Response.Data    = &IsiData
-			_httpstuff.RestponWithJson(response, http.StatusOK, Response)
+			_httpstuff.RestponOnlyDataJson(response, http.StatusOK, IsiData)
 		}
 	}
 }

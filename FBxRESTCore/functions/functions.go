@@ -7,18 +7,14 @@ import (
 	"strconv"
 	"strings"
 	
-	//"encoding/base64"
-	
-	//"image"
-
 	"encoding/json"
 	_struct "fbrest/FBxRESTCore/struct"		
 	_sessions "fbrest/FBxRESTCore/sessions"
 	_httpstuff "fbrest/FBxRESTCore/httpstuff"
 	_dbscheme "fbrest/FBxRESTCore/dbscheme"
-	//"os"
+
 	"net/http"
-	//"net/url"
+
 	"html/template"	
 	"path"
 	"fbrest/FBxRESTCore/config"
@@ -41,6 +37,10 @@ func ResponseHelpHTML(w http.ResponseWriter, code int) {
 	if err := tmpl.Execute(w, profile); err != nil {
 	  http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+}
+func ResponseDataHTML(w http.ResponseWriter, code int) {
+	
+	
 }
 
 func ResponseHelpDesignHTML(w http.ResponseWriter, code int) {

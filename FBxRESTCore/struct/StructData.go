@@ -3,6 +3,7 @@ package _struct
 import (
 	"time"
 	"image"
+	//"null"
 )
 
 type FieldValueAttributes struct {
@@ -102,4 +103,11 @@ type Profile struct {
 	Key string
 	Duration time.Duration
 	Img image.Image
+  }
+
+  type SqlResponseData struct {
+	Colname    string
+	Colvalue   string
+	Datatype   string
+	IsNull     bool
   }

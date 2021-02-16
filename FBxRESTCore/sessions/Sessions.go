@@ -72,6 +72,8 @@ func (r *repository) Delete(token string) {
 func (r *repository) Get(token string) (Item, error) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
+
+	log.Debug(r.items)
 	item, ok := r.items[token]
 	if !ok {
 		var err error = _apperrors.ErrPermissionItemNotFound

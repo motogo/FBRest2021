@@ -3,13 +3,9 @@ package _tests
 import (
 
 		_struct "fbrest/FBxRESTCore/struct"
-		//_permissions "fbrest/FBxRESTCore/permissions"
-		//_sessions "fbrest/FBxRESTCore/sessions"
 		_dbscheme "fbrest/FBxRESTCore/dbscheme"
 		"encoding/json"
-		//"encoding/xml"
 		"io/ioutil"
-		//"time"
 		log "github.com/sirupsen/logrus"
 )
 
@@ -52,9 +48,6 @@ func WriteGetUrlPayloadAttributesJson(pfile string) {
 	
 }
 
-
-
-
 func ReadUrlTABLEAttributesJson(pfile string) {
 	data, err := ioutil.ReadFile(pfile)
     if err != nil {		
@@ -80,11 +73,6 @@ func WriteUrlSessionAttributesJson(pfile string) {
 	
 }
 
-
-
-
-
-
 func ReadUrlSessionAttributesJson(pfile string) {
 	data, err := ioutil.ReadFile(pfile)
     if err != nil {		
@@ -95,12 +83,6 @@ func ReadUrlSessionAttributesJson(pfile string) {
 	json.Unmarshal(data,&xdata)
 	log.Info(data)
 }
-
-
-
-
-
-
 
 func Dummy() {
 

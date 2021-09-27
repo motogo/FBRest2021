@@ -171,12 +171,21 @@ func ReadPermanantSessions(pfile string) {
 	var rep = Repository()
 	for _, pars := range data.Session {
 		pars.Duration = pars.Duration * 1E9
+		var t = pars.Start.Add(pars.Duration)
+		var now = time.Now()
 		log.Debug(" ")	
 		log.WithFields(log.Fields{"Read Token     ": pars.Token,}).Debug(funcStr)	
 		log.WithFields(log.Fields{"Read Connection": pars.Value,}).Debug(funcStr)	
 		log.WithFields(log.Fields{"Read Start     ": pars.Start,}).Debug(funcStr)	
 		log.WithFields(log.Fields{"Read Duration  ": pars.Duration,}).Debug(funcStr)	
-		
+		log.WithFields(log.Fields{"Ends           ": t,}).Debug(funcStr)	
+		log.Debug(" ")
+		g1 := t.Before(now)
+		if g1 == true {
+			log.WithFields(log.Fields{"Token " + pars.Token + " has exceeded date/time ": t,}).Error(funcStr)
+			log.Debug(" ")
+		}
+
 		rep.AddStruct(pars)
 	}
 }

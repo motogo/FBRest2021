@@ -15,7 +15,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	
 )
 
 func main() {
@@ -66,7 +65,6 @@ func main() {
 		log.Info("Logging set to level error")
 		log.SetLevel(log.ErrorLevel)
 	}
-
 
 	_tests.Dummy()
 	//_tests.WriteGetUrlPayloadAttributesJson("tests/UrlPayloadAttributes.json")

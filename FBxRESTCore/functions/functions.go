@@ -2,227 +2,224 @@
 package _functions
 
 import (
-		
-	log "github.com/sirupsen/logrus"
 	"strconv"
 	"strings"
-	
+
+	log "github.com/sirupsen/logrus"
+
 	"encoding/json"
-	_struct "fbrest/FBxRESTCore/struct"		
-	_sessions "fbrest/FBxRESTCore/sessions"
-	_httpstuff "fbrest/FBxRESTCore/httpstuff"
 	_dbscheme "fbrest/FBxRESTCore/dbscheme"
+	_httpstuff "fbrest/FBxRESTCore/httpstuff"
+	_sessions "fbrest/FBxRESTCore/sessions"
+	_struct "fbrest/FBxRESTCore/struct"
 
 	"net/http"
 
-	"html/template"	
-	"path"
 	"fbrest/FBxRESTCore/config"
+	"html/template"
 	_ "image/png"
+	"path"
 )
 
 //Returns respone for HTML site of FBRest usage
 func ResponseHelpHTML(w http.ResponseWriter, code int) {
-	
+
 	const funcstr = "func _functions.ResponseHelpHTML"
-    log.Debug(funcstr)
-	profile := _struct.Profile{Appname:config.AppName,  Version:config.Version,Copyright:config.Copyright, Key:"-MNhE7Yf50sz6U9Hgqae", Duration:_sessions.MaxDuration}
+	log.Debug(funcstr)
+	profile := _struct.Profile{Appname: config.AppName, Version: config.Version, Copyright: config.Copyright, Key: "-MNhE7Yf50sz6U9Hgqae", Duration: _sessions.MaxDuration}
 	fp := path.Join("templates", "index.html")
 	tmpl, err := template.ParseFiles(fp)
 	if err != nil {
-	  http.Error(w, err.Error(), http.StatusInternalServerError)
-	  return
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-  
+
 	if err := tmpl.Execute(w, profile); err != nil {
-	  http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 func ResponseDataHTML(w http.ResponseWriter, code int) {
-	
-	
+
 }
 
 func ResponseHelpDesignHTML(w http.ResponseWriter, code int) {
-	
+
 	/*
-	reader, err := os.Open("templates/selfhtml.png")
-	if err != nil {
-	     log.Fatal(err)
-	}
-	m, _, err := image.Decode(reader)
-	defer reader.Close()
-*/
-    const funcstr = "func _functions.ResponseHelpDesignHTML"
-    log.Debug(funcstr)
-	profile := _struct.Profile{Appname:config.AppName,  Version:config.Version,Copyright:config.Copyright, Key:"-MNhE7Yf50sz6U9Hgqae", Duration:_sessions.MaxDuration}
+		reader, err := os.Open("templates/selfhtml.png")
+		if err != nil {
+		     log.Fatal(err)
+		}
+		m, _, err := image.Decode(reader)
+		defer reader.Close()
+	*/
+	const funcstr = "func _functions.ResponseHelpDesignHTML"
+	log.Debug(funcstr)
+	profile := _struct.Profile{Appname: config.AppName, Version: config.Version, Copyright: config.Copyright, Key: "-MNhE7Yf50sz6U9Hgqae", Duration: _sessions.MaxDuration}
 	fp := path.Join("templates", "design.html")
 	tmpl, err := template.ParseFiles(fp)
 	if err != nil {
-	  http.Error(w, err.Error(), http.StatusInternalServerError)
-	  return
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-  
+
 	if err := tmpl.Execute(w, profile); err != nil {
-	  http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 func ResponseHelpCommandsHTML(w http.ResponseWriter, code int) {
 	const funcstr = "func _functions.ResponseHelpCommandsHTML"
 	log.Debug(funcstr)
-	profile := _struct.Profile{Appname:config.AppName,  Version:config.Version,Copyright:config.Copyright, Key:"-MNhE7Yf50sz6U9Hgqae", Duration:_sessions.MaxDuration}
+	profile := _struct.Profile{Appname: config.AppName, Version: config.Version, Copyright: config.Copyright, Key: "-MNhE7Yf50sz6U9Hgqae", Duration: _sessions.MaxDuration}
 	fp := path.Join("templates", "commands.html")
 	tmpl, err := template.ParseFiles(fp)
 	if err != nil {
-	  http.Error(w, err.Error(), http.StatusInternalServerError)
-	  return
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-  
+
 	if err := tmpl.Execute(w, profile); err != nil {
-	  http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
 func ResponseInfoBusyText(w http.ResponseWriter, code int) {
 	const funcstr = "func _functions.ResponseInfoBusyText"
 	log.Debug(funcstr)
-	profile := _struct.Profile{Appname:config.AppName,  Version:config.Version,Copyright:config.Copyright, Key:"-MNhE7Yf50sz6U9Hgqae", Duration:_sessions.MaxDuration}
+	profile := _struct.Profile{Appname: config.AppName, Version: config.Version, Copyright: config.Copyright, Key: "-MNhE7Yf50sz6U9Hgqae", Duration: _sessions.MaxDuration}
 	fp := path.Join("templates", "busy.html")
 	tmpl, err := template.ParseFiles(fp)
 	if err != nil {
-	  http.Error(w, err.Error(), http.StatusInternalServerError)
-	  return
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-  
+
 	if err := tmpl.Execute(w, profile); err != nil {
-	  http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
-
-
 
 func OutParameters(entitiesData _struct.SQLAttributes) {
 	const funcstr = "func _functions.OutParameters"
 	log.Debug(funcstr)
-	
-	log.WithFields(log.Fields{"Given command     ": entitiesData.Cmd,}).Info("")
-	log.WithFields(log.Fields{"Given sepfill     ": entitiesData.Sepfill,}).Info("")
-	log.WithFields(log.Fields{"Given info        ": entitiesData.Info,}).Info("")
+
+	log.WithFields(log.Fields{"Given command     ": entitiesData.Cmd}).Info("")
+	log.WithFields(log.Fields{"Given sepfill     ": entitiesData.Sepfill}).Info("")
+	log.WithFields(log.Fields{"Given info        ": entitiesData.Info}).Info("")
 }
 
 func OutTableParameters(entitiesData _struct.GetTABLEAttributes) {
 	const funcstr = "func _functions.OutTableParameters"
 	log.Debug(funcstr)
-	
-	log.WithFields(log.Fields{"Given fields      ": entitiesData.Fields,}).Info("")
-	log.WithFields(log.Fields{"Given order by    ": entitiesData.OrderBy,}).Info("")
-	log.WithFields(log.Fields{"Given group by    ": entitiesData.GroupBy,}).Info("")
-	log.WithFields(log.Fields{"Given sepfill     ": entitiesData.Sepfill,}).Info("")
-	log.WithFields(log.Fields{"Given info        ": entitiesData.Info,}).Info("")	
+
+	log.WithFields(log.Fields{"Given fields      ": entitiesData.Fields}).Info("")
+	log.WithFields(log.Fields{"Given order by    ": entitiesData.OrderBy}).Info("")
+	log.WithFields(log.Fields{"Given group by    ": entitiesData.GroupBy}).Info("")
+	log.WithFields(log.Fields{"Given sepfill     ": entitiesData.Sepfill}).Info("")
+	log.WithFields(log.Fields{"Given info        ": entitiesData.Info}).Info("")
 }
 
-func GetSQLParamsFromBODY(r *http.Request , entitiesData *_struct.SQLAttributes) (bool) {
+func GetSQLParamsFromBODY(r *http.Request, entitiesData *_struct.SQLAttributes) bool {
 	const funcstr = "func _functions.GetSQLParamsFromBODY"
 	log.WithFields(log.Fields{"body": r.Body}).Debug(funcstr)
 	var xdata _struct.GetUrlSQLAttributes
 	err2 := json.NewDecoder(r.Body).Decode(&xdata)
-	if err2 != nil {			
-		log.WithFields(log.Fields{"Decode params to JSON": err2.Error(),	}).Error(funcstr)
+	if err2 != nil {
+		log.WithFields(log.Fields{"Decode params to JSON": err2.Error()}).Error(funcstr)
 		return false
 	}
-	entitiesData.Cmd = ReplaceAritmetics(xdata.Cmd)	
+	entitiesData.Cmd = ReplaceAritmetics(xdata.Cmd)
 	entitiesData.Info = xdata.Info
 	return true
 }
 
-func GetTableParamsFromBODY(r *http.Request , entitiesData *_struct.GetTABLEAttributes) (ok bool) {
+func GetTableParamsFromBODY(r *http.Request, entitiesData *_struct.GetTABLEAttributes) (ok bool) {
 	const funcstr = "func _functions.GetTableParamsFromBODY"
 	log.WithFields(log.Fields{"body": r.Body}).Debug(funcstr)
-	
+
 	var xdata _struct.GetUrlTABLEAttributes
 	err2 := json.NewDecoder(r.Body).Decode(&xdata)
-	if err2 != nil {			
-		log.WithFields(log.Fields{"Decode params to JSON": err2.Error(),	}).Error(funcstr)
+	if err2 != nil {
+		log.WithFields(log.Fields{"Decode params to JSON": err2.Error()}).Error(funcstr)
 		return false
 	}
-	entitiesData.Fields = strings.Join(xdata.Fields,",")
+	entitiesData.Fields = strings.Join(xdata.Fields, ",")
 	entitiesData.Filter = xdata.Filter
-	entitiesData.GroupBy = strings.Join(xdata.GroupBy,",")
-	entitiesData.OrderBy = strings.Join(xdata.OrderBy,",")
+	entitiesData.GroupBy = strings.Join(xdata.GroupBy, ",")
+	entitiesData.OrderBy = strings.Join(xdata.OrderBy, ",")
 	entitiesData.Skip = xdata.Skip
-	entitiesData.First = xdata.First	
+	entitiesData.First = xdata.First
 	return true
 }
 
-func GetFieldParamsFromBODY(r *http.Request , entitiesData *_struct.GetTABLEAttributes) (ok bool) {
+func GetFieldParamsFromBODY(r *http.Request, entitiesData *_struct.GetTABLEAttributes) (ok bool) {
 	const funcstr = "func _functions.GetFieldParamsFromBODY"
 	log.WithFields(log.Fields{"body": r.Body}).Debug(funcstr)
-	
+
 	var xdata _struct.GetUrlTABLEAttributes
 	err2 := json.NewDecoder(r.Body).Decode(&xdata)
-	if err2 != nil {			
-		log.WithFields(log.Fields{"Decode params to JSON": err2.Error(),	}).Error(funcstr)
+	if err2 != nil {
+		log.WithFields(log.Fields{"Decode params to JSON": err2.Error()}).Error(funcstr)
 		return false
 	}
-	entitiesData.Fields = strings.Join(xdata.Fields,",")
+	entitiesData.Fields = strings.Join(xdata.Fields, ",")
 	entitiesData.Filter = xdata.Filter
-	entitiesData.GroupBy = strings.Join(xdata.GroupBy,",")
-	entitiesData.OrderBy = strings.Join(xdata.OrderBy,",")
+	entitiesData.GroupBy = strings.Join(xdata.GroupBy, ",")
+	entitiesData.OrderBy = strings.Join(xdata.OrderBy, ",")
 	entitiesData.Skip = xdata.Skip
-	entitiesData.First = xdata.First	
+	entitiesData.First = xdata.First
 	return true
 }
 
-func GetSQLParamsFromURL(r *http.Request , entitiesData *_struct.SQLAttributes) (ok bool) {
-	const funcstr = "func GetSQLParamsFromURL"
-	
+func GetSQLParamsFromURL(r *http.Request, entitiesData *_struct.SQLAttributes) (ok bool) {
+	const funcstr = "func _functions.GetSQLParamsFromURL"
+
 	log.WithFields(log.Fields{"url": r.URL}).Debug(funcstr)
-	
+
 	var u = r.URL
-	
-	if(strings.HasPrefix(u.RawQuery,_struct.FormatJson)) {			
+
+	if strings.HasPrefix(u.RawQuery, _struct.FormatJson) {
 		var par = u.RawQuery[len(_struct.FormatJson)+1:]
 		par = _httpstuff.UnEscape(par)
-			
-		if(len(par) > 0) {
+
+		if len(par) > 0 {
 			xdata := &_struct.GetUrlSQLAttributes{}
 
 			err := json.Unmarshal([]byte(par), &xdata)
 
-			if(err != nil) {
+			if err != nil {
 				return false
 			}
 
 			log.Debug(xdata)
 			entitiesData.Cmd = xdata.Cmd
-			entitiesData.Info = xdata.Info			
+			entitiesData.Info = xdata.Info
 			return true
 		}
 	}
 	var okret bool
 	urlparams, ok := r.URL.Query()["cmd"]
 	infoparams, okinfo := r.URL.Query()["info"]
-	log.WithFields(log.Fields{"URL params length": len(urlparams),	}).Debug(funcstr)
+	log.WithFields(log.Fields{"URL params length": len(urlparams)}).Debug(funcstr)
 
-    if ok && len(urlparams[0]) > 0 {
-		
-		var cmd string =  string(urlparams[0])
-		if(strings.HasPrefix(cmd,"'")||strings.HasPrefix(cmd,"-")) {
-				
+	if ok && len(urlparams[0]) > 0 {
+
+		var cmd string = string(urlparams[0])
+		if strings.HasPrefix(cmd, "'") || strings.HasPrefix(cmd, "-") {
+
 			entitiesData.Sepfill = cmd[:1]
-            cmd = cmd[1:]
-			cmd = strings.ReplaceAll(cmd, entitiesData.Sepfill, " ")	
-			log.WithFields(log.Fields{"Sepfill": entitiesData.Sepfill,	}).Debug(funcstr+"->set key")				
+			cmd = cmd[1:]
+			cmd = strings.ReplaceAll(cmd, entitiesData.Sepfill, " ")
+			log.WithFields(log.Fields{"Sepfill": entitiesData.Sepfill}).Debug(funcstr + "->set key")
 		}
-			    
-		log.WithFields(log.Fields{"Cmd": cmd,	}).Debug(funcstr+"->set key")
+
+		log.WithFields(log.Fields{"Cmd": cmd}).Debug(funcstr + "->set key")
 		entitiesData.Cmd = cmd
-		okret = true;
+		okret = true
 	}
 	if okinfo && len(infoparams[0]) > 0 {
-				
-		var info string =  string(infoparams[0])				
-		log.WithFields(log.Fields{"Info": info,	}).Debug(funcstr+"->set key")
+
+		var info string = string(infoparams[0])
+		log.WithFields(log.Fields{"Info": info}).Debug(funcstr + "->set key")
 		entitiesData.Info = info
 		okret = true
 	}
@@ -230,59 +227,59 @@ func GetSQLParamsFromURL(r *http.Request , entitiesData *_struct.SQLAttributes) 
 	return okret
 }
 
-func GetSessionParamsFromBODY(r *http.Request , entitiesData *_dbscheme.DatabaseAttributes) (bool) {
-	const funcstr = "func GetSessionParamsFromBODY"
-	log.Debug(funcstr) 
+func GetSessionParamsFromBODY(r *http.Request, entitiesData *_dbscheme.DatabaseAttributes) bool {
+	const funcstr = "func _functions.GetSessionParamsFromBODY"
+	log.Debug(funcstr)
 	var xdata _dbscheme.DatabaseAttributes
-	
+
 	err2 := json.NewDecoder(r.Body).Decode(&xdata)
-	if err2 != nil {			
-		log.WithFields(log.Fields{"Decode params to JSON": err2.Error(),	}).Error(funcstr)
+	if err2 != nil {
+		log.WithFields(log.Fields{"Decode params to JSON": err2.Error()}).Error(funcstr)
 		return false
 	}
-	
+
 	entitiesData.Database = xdata.Database
 	entitiesData.Location = xdata.Location
 	entitiesData.Password = xdata.Password
-	entitiesData.User     = xdata.User
-	entitiesData.Port     = xdata.Port
-	
+	entitiesData.User = xdata.User
+	entitiesData.Port = xdata.Port
+
 	return true
 }
 
-func GetSessionSchemeParamsFromBODY(r *http.Request , entitiesData *_dbscheme.GetUrlSessionSchemeAttributes) (bool) {
-	const funcstr = "func GetSessionSchemeParamsFromBODY"
-	log.Debug(funcstr) 
+func GetSessionSchemeParamsFromBODY(r *http.Request, entitiesData *_dbscheme.GetUrlSessionSchemeAttributes) bool {
+	const funcstr = "func _functions.GetSessionSchemeParamsFromBODY"
+	log.Debug(funcstr)
 	var xdata _dbscheme.GetUrlSessionSchemeAttributes
-	
+
 	err2 := json.NewDecoder(r.Body).Decode(&xdata)
-	if err2 != nil {			
-		log.WithFields(log.Fields{"Decode params to JSON": err2.Error(),	}).Error(funcstr)
+	if err2 != nil {
+		log.WithFields(log.Fields{"Decode params to JSON": err2.Error()}).Error(funcstr)
 		return false
 	}
-	
+
 	entitiesData.Password = xdata.Password
-	entitiesData.User     = xdata.User
+	entitiesData.User = xdata.User
 	entitiesData.DBScheme = xdata.DBScheme
-	
+
 	return true
 }
 
-func GetSessionParamsFromURL(r *http.Request , entitiesData *_dbscheme.DatabaseAttributes) (bool) {
-	
-	const funcstr = "func GetSessionParamsFromURL"
+func GetSessionParamsFromURL(r *http.Request, entitiesData *_dbscheme.DatabaseAttributes) bool {
+
+	const funcstr = "func _functions.GetSessionParamsFromURL"
 
 	var u = r.URL
-	if(strings.HasPrefix(u.RawQuery,_struct.FormatJson)) {			
+	if strings.HasPrefix(u.RawQuery, _struct.FormatJson) {
 		var par = u.RawQuery[len(_struct.FormatJson)+1:]
-		par = _httpstuff.UnEscape(par)		
-	//	 par = "{\"location\":\"localhost\",\"database\":\"D:/Data/Dokuments/DOKUMENTS30.FDB\",\"port\":3050,\"password\":\"su\",\"user\":\"superuser\"}"	
-		if(len(par) > 0) {
+		par = _httpstuff.UnEscape(par)
+		//	 par = "{\"location\":\"localhost\",\"database\":\"D:/Data/Dokuments/DOKUMENTS30.FDB\",\"port\":3050,\"password\":\"su\",\"user\":\"superuser\"}"
+		if len(par) > 0 {
 			xdata := &_dbscheme.DatabaseAttributes{}
 
 			err := json.Unmarshal([]byte(par), &xdata)
 
-			if(err != nil) {
+			if err != nil {
 				return false
 			}
 
@@ -290,8 +287,8 @@ func GetSessionParamsFromURL(r *http.Request , entitiesData *_dbscheme.DatabaseA
 			entitiesData.Database = xdata.Database
 			entitiesData.Port = xdata.Port
 			entitiesData.Password = xdata.Password
-			entitiesData.User = xdata.User		
-			entitiesData.Location = xdata.Location	
+			entitiesData.User = xdata.User
+			entitiesData.Location = xdata.Location
 			return true
 		}
 	}
@@ -302,12 +299,12 @@ func GetSessionParamsFromURL(r *http.Request , entitiesData *_dbscheme.DatabaseA
 	portparams, portok := u.Query()["Port"]
 	userparams, userok := u.Query()["User"]
 	passwordparams, passwordok := u.Query()["Password"]
-	
+
 	if databaseok && len(databaseparams[0]) > 0 {
-		log.WithFields(log.Fields{"URL params length": len(databaseparams),	}).Debug(funcstr)
+		log.WithFields(log.Fields{"URL params length": len(databaseparams)}).Debug(funcstr)
 		urlparam := databaseparams[0]
-		if(urlparam[:1] == "(") {
-			entitiesData.Database = urlparam[1:len(urlparam)-1]
+		if urlparam[:1] == "(" {
+			entitiesData.Database = urlparam[1 : len(urlparam)-1]
 		} else {
 			entitiesData.Database = urlparam
 		}
@@ -315,10 +312,10 @@ func GetSessionParamsFromURL(r *http.Request , entitiesData *_dbscheme.DatabaseA
 	}
 
 	if locationok && len(locationparams[0]) > 0 {
-		log.WithFields(log.Fields{"URL location length": len(locationparams),	}).Debug(funcstr)
+		log.WithFields(log.Fields{"URL location length": len(locationparams)}).Debug(funcstr)
 		urlparam := locationparams[0]
-		if(urlparam[:1] == "(") {
-			entitiesData.Location = urlparam[1:len(urlparam)-1]
+		if urlparam[:1] == "(" {
+			entitiesData.Location = urlparam[1 : len(urlparam)-1]
 		} else {
 			entitiesData.Location = urlparam
 		}
@@ -326,21 +323,21 @@ func GetSessionParamsFromURL(r *http.Request , entitiesData *_dbscheme.DatabaseA
 	}
 
 	if portok && len(portparams[0]) > 0 {
-		log.WithFields(log.Fields{"URL port length": len(portparams),	}).Debug(funcstr)
+		log.WithFields(log.Fields{"URL port length": len(portparams)}).Debug(funcstr)
 		urlparam := portparams[0]
-		if(urlparam[:1] == "(") {
-			entitiesData.Port,_ = strconv.Atoi(urlparam[1:len(urlparam)-1])
+		if urlparam[:1] == "(" {
+			entitiesData.Port, _ = strconv.Atoi(urlparam[1 : len(urlparam)-1])
 		} else {
-			entitiesData.Port,_ = strconv.Atoi(urlparam)
+			entitiesData.Port, _ = strconv.Atoi(urlparam)
 		}
 		okret = true
 	}
 
 	if userok && len(userparams[0]) > 0 {
-		log.WithFields(log.Fields{"URL user length": len(userparams),	}).Debug(funcstr)
+		log.WithFields(log.Fields{"URL user length": len(userparams)}).Debug(funcstr)
 		urlparam := userparams[0]
-		if(urlparam[:1] == "(") {
-			entitiesData.User = urlparam[1:len(urlparam)-1]
+		if urlparam[:1] == "(" {
+			entitiesData.User = urlparam[1 : len(urlparam)-1]
 		} else {
 			entitiesData.User = urlparam
 		}
@@ -348,10 +345,10 @@ func GetSessionParamsFromURL(r *http.Request , entitiesData *_dbscheme.DatabaseA
 	}
 
 	if passwordok && len(passwordparams[0]) > 0 {
-		log.WithFields(log.Fields{"URL password length": len(passwordparams),	}).Debug(funcstr)
+		log.WithFields(log.Fields{"URL password length": len(passwordparams)}).Debug(funcstr)
 		urlparam := passwordparams[0]
-		if(urlparam[:1] == "(") {
-			entitiesData.Password = urlparam[1:len(urlparam)-1]
+		if urlparam[:1] == "(" {
+			entitiesData.Password = urlparam[1 : len(urlparam)-1]
 		} else {
 			entitiesData.Password = urlparam
 		}
@@ -361,44 +358,44 @@ func GetSessionParamsFromURL(r *http.Request , entitiesData *_dbscheme.DatabaseA
 	return okret
 }
 
-func GetSessionSchemeParamsFromURL(r *http.Request , entitiesData *_dbscheme.GetUrlSessionSchemeAttributes) (bool) {
-	
-	const funcstr = "func GetSessionParamsFromURL"
+func GetSessionSchemeParamsFromURL(r *http.Request, entitiesData *_dbscheme.GetUrlSessionSchemeAttributes) bool {
+
+	const funcstr = "func _functions.GetSessionSchemeParamsFromURL"
 
 	var u = r.URL
-	if(strings.HasPrefix(u.RawQuery,_struct.FormatJson)) {			
+	if strings.HasPrefix(u.RawQuery, _struct.FormatJson) {
 		var par = u.RawQuery[len(_struct.FormatJson)+1:]
-		par = _httpstuff.UnEscape(par)		
-	//old	 par = "{\"location\":\"localhost\",\"database\":\"D:/Data/Dokuments/DOKUMENTS30.FDB\",\"port\":3050,\"password\":\"su\",\"user\":\"superuser\"}"	
-	//old	 par = "{\"dbscheme\":\"health_ffm1\",\"password\":\"su\",\"user\":\"superuser\"}"	
-		if(len(par) > 0) {
+		par = _httpstuff.UnEscape(par)
+		//old	 par = "{\"location\":\"localhost\",\"database\":\"D:/Data/Dokuments/DOKUMENTS30.FDB\",\"port\":3050,\"password\":\"su\",\"user\":\"superuser\"}"
+		//old	 par = "{\"dbscheme\":\"health_ffm1\",\"password\":\"su\",\"user\":\"superuser\"}"
+		if len(par) > 0 {
 			xdata := &_dbscheme.GetUrlSessionSchemeAttributes{}
 
 			err := json.Unmarshal([]byte(par), &xdata)
 
-			if(err != nil) {
+			if err != nil {
 				return false
 			}
 
 			log.Info(xdata)
 			entitiesData.Password = xdata.Password
-			entitiesData.User     = xdata.User
-			entitiesData.DBScheme = xdata.DBScheme		
+			entitiesData.User = xdata.User
+			entitiesData.DBScheme = xdata.DBScheme
 			return true
 		}
 	}
 
 	var okret bool
 	dbschemeparams, dbschemeok := u.Query()["DBScheme"]
-	
+
 	userparams, userok := u.Query()["User"]
 	passwordparams, passwordok := u.Query()["Password"]
-	
+
 	if dbschemeok && len(dbschemeparams[0]) > 0 {
-		log.WithFields(log.Fields{"URL params length": len(dbschemeparams),	}).Debug(funcstr)
+		log.WithFields(log.Fields{"URL params length": len(dbschemeparams)}).Debug(funcstr)
 		urlparam := dbschemeparams[0]
-		if(urlparam[:1] == "(") {
-			entitiesData.DBScheme = urlparam[1:len(urlparam)-1]
+		if urlparam[:1] == "(" {
+			entitiesData.DBScheme = urlparam[1 : len(urlparam)-1]
 		} else {
 			entitiesData.DBScheme = urlparam
 		}
@@ -406,10 +403,10 @@ func GetSessionSchemeParamsFromURL(r *http.Request , entitiesData *_dbscheme.Get
 	}
 
 	if userok && len(userparams[0]) > 0 {
-		log.WithFields(log.Fields{"URL user length": len(userparams),	}).Debug(funcstr)
+		log.WithFields(log.Fields{"URL user length": len(userparams)}).Debug(funcstr)
 		urlparam := userparams[0]
-		if(urlparam[:1] == "(") {
-			entitiesData.User = urlparam[1:len(urlparam)-1]
+		if urlparam[:1] == "(" {
+			entitiesData.User = urlparam[1 : len(urlparam)-1]
 		} else {
 			entitiesData.User = urlparam
 		}
@@ -417,10 +414,10 @@ func GetSessionSchemeParamsFromURL(r *http.Request , entitiesData *_dbscheme.Get
 	}
 
 	if passwordok && len(passwordparams[0]) > 0 {
-		log.WithFields(log.Fields{"URL password length": len(passwordparams),	}).Debug(funcstr)
+		log.WithFields(log.Fields{"URL password length": len(passwordparams)}).Debug(funcstr)
 		urlparam := passwordparams[0]
-		if(urlparam[:1] == "(") {
-			entitiesData.Password = urlparam[1:len(urlparam)-1]
+		if urlparam[:1] == "(" {
+			entitiesData.Password = urlparam[1 : len(urlparam)-1]
 		} else {
 			entitiesData.Password = urlparam
 		}
@@ -430,197 +427,195 @@ func GetSessionSchemeParamsFromURL(r *http.Request , entitiesData *_dbscheme.Get
 	return okret
 }
 
-func GetFIELDPayloadFromString2(params string ,  entitiesData *_struct.FIELDVALUEAttributes) {
-	
+func GetFIELDPayloadFromString2(params string, entitiesData *_struct.FIELDVALUEAttributes) {
+
 	// payload=(id:1, username: 'admin', email: 'email@example.org')
 
-	const funcstr = "func GetFIELDPayloadFromString"
-	var psplit  = "&"
-	var csplit  = "="
-	var par = strings.Split(params,psplit)
+	const funcstr = "func _functions.GetFIELDPayloadFromString"
+	var psplit = "&"
+	var csplit = "="
+	var par = strings.Split(params, psplit)
 
-	log.WithFields(log.Fields{"URL params length": len(par),	}).Debug(funcstr)
-	
-    if len(par) > 0 {
+	log.WithFields(log.Fields{"URL params length": len(par)}).Debug(funcstr)
+
+	if len(par) > 0 {
 		for _, pars := range par {
 			params = _httpstuff.UnEscape(pars)
-			keyval :=  strings.SplitN(params,csplit,2)
-						
-			log.WithFields(log.Fields{"Key": string(keyval[0]),	}).Debug(funcstr+"->found key")
-			log.WithFields(log.Fields{"Val": string(keyval[1]),	}).Debug(funcstr+"->found value")
-			
-			if(strings.EqualFold(string(keyval[0]), string("FIELDS"))) {								
-				log.WithFields(log.Fields{"Fields": string(keyval[1]),	}).Debug(funcstr+"->set Fields")
-				
-			}			
-		}		
-	} 
-	return
+			keyval := strings.SplitN(params, csplit, 2)
+
+			log.WithFields(log.Fields{"Key": string(keyval[0])}).Debug(funcstr + "->found key")
+			log.WithFields(log.Fields{"Val": string(keyval[1])}).Debug(funcstr + "->found value")
+
+			if strings.EqualFold(string(keyval[0]), string("FIELDS")) {
+				log.WithFields(log.Fields{"Fields": string(keyval[1])}).Debug(funcstr + "->set Fields")
+
+			}
+		}
+	}
+
 }
 
-func GetSQLParamsFromString2(params string ,entitiesData *_struct.SQLAttributes) {
-	
-	const funcstr = "func GetSQLParamsFromString"
-	var csplit  = "="
+func GetSQLParamsFromString2(params string, entitiesData *_struct.SQLAttributes) {
+
+	const funcstr = "func _functions.GetSQLParamsFromString2"
+	var csplit = "="
 	var par = params
 
-	log.WithFields(log.Fields{"URL params length": len(par),	}).Debug(funcstr)
-    params = _httpstuff.UnEscape(par)
-	log.WithFields(log.Fields{"SQL": params,	}).Debug(funcstr+"->set key")
+	log.WithFields(log.Fields{"URL params length": len(par)}).Debug(funcstr)
+	params = _httpstuff.UnEscape(par)
+	log.WithFields(log.Fields{"SQL": params}).Debug(funcstr + "->set key")
 
-	
-	keyval :=  strings.SplitN(params,csplit,2)
-	
-	log.WithFields(log.Fields{"Key": string(keyval[0]),	}).Debug(funcstr+"->found key")
-	log.WithFields(log.Fields{"Val": string(keyval[1]),	}).Debug(funcstr+"->found value")
-	
-	if(strings.EqualFold(string(keyval[0]), string("CMD"))) {
-		var cmd string =  string(keyval[1])
-		if(strings.HasPrefix(cmd,"'")||strings.HasPrefix(cmd,"-")) {
-		
+	keyval := strings.SplitN(params, csplit, 2)
+
+	log.WithFields(log.Fields{"Key": string(keyval[0])}).Debug(funcstr + "->found key")
+	log.WithFields(log.Fields{"Val": string(keyval[1])}).Debug(funcstr + "->found value")
+
+	if strings.EqualFold(string(keyval[0]), string("CMD")) {
+		var cmd string = string(keyval[1])
+		if strings.HasPrefix(cmd, "'") || strings.HasPrefix(cmd, "-") {
+
 			entitiesData.Sepfill = cmd[:1]
 			cmd = cmd[1:]
-			cmd = strings.ReplaceAll(cmd, entitiesData.Sepfill, " ")	
-			log.WithFields(log.Fields{"Sepfill": entitiesData.Sepfill,	}).Debug(funcstr+"->set key")				
+			cmd = strings.ReplaceAll(cmd, entitiesData.Sepfill, " ")
+			log.WithFields(log.Fields{"Sepfill": entitiesData.Sepfill}).Debug(funcstr + "->set key")
 		}
-		
-		log.WithFields(log.Fields{"Cmd": cmd,	}).Debug(funcstr+"->set key")
+
+		log.WithFields(log.Fields{"Cmd": cmd}).Debug(funcstr + "->set key")
 		entitiesData.Cmd = cmd
 	}
-	
-	if(strings.EqualFold(string(keyval[0]), string("INFO"))) {								
-		log.WithFields(log.Fields{"Info": string(keyval[1]),	}).Debug(funcstr+"->set key")
+
+	if strings.EqualFold(string(keyval[0]), string("INFO")) {
+		log.WithFields(log.Fields{"Info": string(keyval[1])}).Debug(funcstr + "->set key")
 		entitiesData.Info = string(keyval[1])
-	}							
-	return
+	}
+
 }
 
 //Returns the last-nLeft slice from URL
 //e.g. when nLeft == 0 returns the last slice
 func GetRightPathSliceFromURL(r *http.Request, nLeft int) (key string) {
-	
+	const funcstr = "func _functions.GetRightPathSliceFromURL"
 	urlstr := string(r.URL.String())
-	var keyval =  strings.SplitN(urlstr,"?",2)
-	
+	var keyval = strings.SplitN(urlstr, "?", 2)
+
 	urlstr = keyval[0]
-	t2 :=  strings.Split(urlstr,"/")
+	t2 := strings.Split(urlstr, "/")
 	key = t2[len(t2)-1-nLeft]
-	log.WithFields(log.Fields{_sessions.SessionTokenStr: key,	}).Debug("func GetPathSliceFromURL")	
+	log.WithFields(log.Fields{_struct.SessionTokenStr: key}).Debug(funcstr)
 	return key
 }
 
 func GetLeftPathSliceFromURL(r *http.Request, nLeft int) (key string) {
-	const funcstr = "func GetLeftPathSliceFromURL"
+	const funcstr = "func _functions.GetLeftPathSliceFromURL"
 	urlstr := string(r.URL.String())
-	var keyval =  strings.SplitN(urlstr,"?",2)
-	
+	var keyval = strings.SplitN(urlstr, "?", 2)
+
 	urlstr = keyval[0]
 
-	t2 :=  strings.Split(urlstr,"/")
+	t2 := strings.Split(urlstr, "/")
 	key = t2[nLeft+1]
-	log.WithFields(log.Fields{_sessions.SessionTokenStr: key,	}).Debug(funcstr)	
+	log.WithFields(log.Fields{_struct.SessionTokenStr: key}).Debug(funcstr)
 	return key
 }
 
-func GetTableParamsFromURL(r *http.Request , entitiesData *_struct.GetTABLEAttributes) (bool) {
-	
+func GetTableParamsFromURL(r *http.Request, entitiesData *_struct.GetTABLEAttributes) bool {
+
 	//  http://localhost:4488/{{.Key}}/rest/get/TSTANDORT?fjson={"table": "TSTANDORT","fields": ["ID","BEZ","GUELTIG"],"filter":"ID=1 AND BEZ like 'x%'","order": ["BEZ ASC","ID DESC"],"groupby": ["ID","BEZ"],"first": 0}
-	
-	const funcstr = "func GetTableParamsFromURL"
+
+	//const funcstr = "func functions.GetTableParamsFromURL"
 
 	var u = r.URL
-	
-	if(strings.HasPrefix(u.RawQuery,_struct.FormatJson)) {			
+
+	if strings.HasPrefix(u.RawQuery, _struct.FormatJson) {
 		var par = u.RawQuery[len(_struct.FormatJson)+1:]
 		par = _httpstuff.UnEscape(par)
-			
 
-		if(len(par) > 0) {
+		if len(par) > 0 {
 			xdata := &_struct.GetUrlTABLEAttributes{}
 
 			err := json.Unmarshal([]byte(par), &xdata)
 
-			if(err != nil) {
+			if err != nil {
 				return false
 			}
 
 			log.Info(xdata)
-			entitiesData.Fields = strings.Join(xdata.Fields,",")
+			entitiesData.Fields = strings.Join(xdata.Fields, ",")
 			entitiesData.Filter = xdata.Filter
-			entitiesData.GroupBy = strings.Join(xdata.GroupBy,",")
-			entitiesData.OrderBy = strings.Join(xdata.OrderBy,",")
+			entitiesData.GroupBy = strings.Join(xdata.GroupBy, ",")
+			entitiesData.OrderBy = strings.Join(xdata.OrderBy, ",")
 			entitiesData.Skip = xdata.Skip
-			entitiesData.First = xdata.First			
+			entitiesData.First = xdata.First
 			return true
 		}
 	}
-	
+
 	var s = _httpstuff.UnEscape(u.RawQuery)
 
-	var pars = strings.Split(s,"&")
+	var pars = strings.Split(s, "&")
 	var okret bool
 	for _, par := range pars {
-		if(strings.HasPrefix(par,_struct.Fields+"=")){
+		if strings.HasPrefix(par, _struct.Fields+"=") {
 			var par = par[len(_struct.Fields)+1:]
-			if(par[:1] == "(") {
-				entitiesData.Fields = par[1:len(par)-1]
+			if par[:1] == "(" {
+				entitiesData.Fields = par[1 : len(par)-1]
 			} else {
 				entitiesData.Fields = par
 			}
-			if(len(entitiesData.Fields) < 1) {
+			if len(entitiesData.Fields) < 1 {
 				entitiesData.Fields = "*"
 			}
 			okret = true
-		} else if(strings.HasPrefix(par,_struct.Filter+"=")){
+		} else if strings.HasPrefix(par, _struct.Filter+"=") {
 			var par = par[len(_struct.Filter)+1:]
-			if(par[:1] == "(") {
-				entitiesData.Filter = par[1:len(par)-1]
+			if par[:1] == "(" {
+				entitiesData.Filter = par[1 : len(par)-1]
 			} else {
 				entitiesData.Filter = par
 			}
 			entitiesData.Filter = ReplaceAritmetics(entitiesData.Filter)
 			okret = true
-		} else if(strings.HasPrefix(par,_struct.Order+"=")){
+		} else if strings.HasPrefix(par, _struct.Order+"=") {
 			var par = par[len(_struct.Order)+1:]
-			if(par[:1] == "(") {
-				entitiesData.OrderBy = par[1:len(par)-1]
+			if par[:1] == "(" {
+				entitiesData.OrderBy = par[1 : len(par)-1]
 			} else {
 				entitiesData.OrderBy = par
 			}
 			okret = true
-		} else if(strings.HasPrefix(par,_struct.Group+"=")){
+		} else if strings.HasPrefix(par, _struct.Group+"=") {
 			var par = par[len(_struct.Group)+1:]
-			if(par[:1] == "(") {
-				entitiesData.GroupBy = par[1:len(par)-1]
+			if par[:1] == "(" {
+				entitiesData.GroupBy = par[1 : len(par)-1]
 			} else {
 				entitiesData.GroupBy = par
 			}
 			okret = true
-		
-		} else if(strings.HasPrefix(par,_struct.Info+"=")){
+
+		} else if strings.HasPrefix(par, _struct.Info+"=") {
 			var par = par[len(_struct.Info)+1:]
-			if(par[:1] == "(") {
-				entitiesData.Info = par[1:len(par)-1]
+			if par[:1] == "(" {
+				entitiesData.Info = par[1 : len(par)-1]
 			} else {
 				entitiesData.Info = par
 			}
 			okret = true
-		
-		} else if(strings.HasPrefix(par,_struct.Limit+"=")){
+
+		} else if strings.HasPrefix(par, _struct.Limit+"=") {
 			var par = par[len(_struct.Limit)+1:]
 			var limit string
-			if(par[:1] == "(") {
-				limit = par[1:len(par)-1]
+			if par[:1] == "(" {
+				limit = par[1 : len(par)-1]
 			} else {
 				limit = par
 			}
-			var lm = strings.Split(limit,",")
-			if(len(lm) == 1) {
-				entitiesData.First,_ = strconv.Atoi(lm[0])
+			var lm = strings.Split(limit, ",")
+			if len(lm) == 1 {
+				entitiesData.First, _ = strconv.Atoi(lm[0])
 				entitiesData.Skip = 0
-			} else if (len(lm) == 2) {
-				entitiesData.First,_ = strconv.Atoi(lm[0])
-				entitiesData.Skip,_ = strconv.Atoi(lm[1])		
+			} else if len(lm) == 2 {
+				entitiesData.First, _ = strconv.Atoi(lm[0])
+				entitiesData.Skip, _ = strconv.Atoi(lm[1])
 			}
 			okret = true
 		}
@@ -629,93 +624,92 @@ func GetTableParamsFromURL(r *http.Request , entitiesData *_struct.GetTABLEAttri
 	return okret
 }
 
-func GetFieldParamsFromURL(r *http.Request , entitiesData *_struct.GetTABLEAttributes) (bool) {
-	
+func GetFieldParamsFromURL(r *http.Request, entitiesData *_struct.GetTABLEAttributes) bool {
+
 	//  http://localhost:4488/{{.Key}}/rest/get/TSTANDORT?fjson={"table": "TSTANDORT","fields": ["ID","BEZ","GUELTIG"],"filter":"ID=1 AND BEZ like 'x%'","order": ["BEZ ASC","ID DESC"],"groupby": ["ID","BEZ"],"first": 0}
-	
-	const funcstr = "func GetFieldParamsFromURL"
+
+	//const funcstr = "func functions.GetFieldParamsFromURL"
 
 	var u = r.URL
-	if(strings.HasPrefix(u.RawQuery,_struct.FormatJson)) {			
+	if strings.HasPrefix(u.RawQuery, _struct.FormatJson) {
 		var par = u.RawQuery[len(_struct.FormatJson)+1:]
 		par = _httpstuff.UnEscape(par)
-			
 
-		if(len(par) > 0) {
+		if len(par) > 0 {
 			xdata := &_struct.GetUrlTABLEAttributes{}
 
 			err := json.Unmarshal([]byte(par), &xdata)
 
-			if(err != nil) {
+			if err != nil {
 				return false
 			}
 
 			log.Info(xdata)
-			entitiesData.Fields = strings.Join(xdata.Fields,",")
+			entitiesData.Fields = strings.Join(xdata.Fields, ",")
 			entitiesData.Filter = xdata.Filter
-			entitiesData.GroupBy = strings.Join(xdata.GroupBy,",")
-			entitiesData.OrderBy = strings.Join(xdata.OrderBy,",")
+			entitiesData.GroupBy = strings.Join(xdata.GroupBy, ",")
+			entitiesData.OrderBy = strings.Join(xdata.OrderBy, ",")
 			entitiesData.Skip = xdata.Skip
-			entitiesData.First = xdata.First			
+			entitiesData.First = xdata.First
 			return true
 		}
 	}
 
 	var s = _httpstuff.UnEscape(u.RawQuery)
 
-	var pars = strings.Split(s,"&")
+	var pars = strings.Split(s, "&")
 	var okret bool
 	for _, par := range pars {
-		if(strings.HasPrefix(par,_struct.Filter+"=")){
+		if strings.HasPrefix(par, _struct.Filter+"=") {
 			var par = par[len(_struct.Filter)+1:]
-			if(par[:1] == "(") {
-				entitiesData.Filter = par[1:len(par)-1]
+			if par[:1] == "(" {
+				entitiesData.Filter = par[1 : len(par)-1]
 			} else {
 				entitiesData.Filter = par
 			}
 			entitiesData.Filter = ReplaceAritmetics(entitiesData.Filter)
 			okret = true
-		} else if(strings.HasPrefix(par,_struct.Order+"=")){
+		} else if strings.HasPrefix(par, _struct.Order+"=") {
 			var par = par[len(_struct.Order)+1:]
-			if(par[:1] == "(") {
-				entitiesData.OrderBy = par[1:len(par)-1]
+			if par[:1] == "(" {
+				entitiesData.OrderBy = par[1 : len(par)-1]
 			} else {
 				entitiesData.OrderBy = par
 			}
 			okret = true
-		} else if(strings.HasPrefix(par,_struct.Group+"=")){
+		} else if strings.HasPrefix(par, _struct.Group+"=") {
 			var par = par[len(_struct.Group)+1:]
-			if(par[:1] == "(") {
-				entitiesData.GroupBy = par[1:len(par)-1]
+			if par[:1] == "(" {
+				entitiesData.GroupBy = par[1 : len(par)-1]
 			} else {
 				entitiesData.GroupBy = par
 			}
 			okret = true
-		
-		} else if(strings.HasPrefix(par,_struct.Info+"=")){
+
+		} else if strings.HasPrefix(par, _struct.Info+"=") {
 			var par = par[len(_struct.Info)+1:]
-			if(par[:1] == "(") {
-				entitiesData.Info = par[1:len(par)-1]
+			if par[:1] == "(" {
+				entitiesData.Info = par[1 : len(par)-1]
 			} else {
 				entitiesData.Info = par
 			}
 			okret = true
-		
-		} else if(strings.HasPrefix(par,_struct.Limit+"=")){
+
+		} else if strings.HasPrefix(par, _struct.Limit+"=") {
 			var par = par[len(_struct.Limit)+1:]
 			var limit string
-			if(par[:1] == "(") {
-				limit = par[1:len(par)-1]
+			if par[:1] == "(" {
+				limit = par[1 : len(par)-1]
 			} else {
 				limit = par
 			}
-			var lm = strings.Split(limit,",")
-			if(len(lm) == 1) {
-				entitiesData.First,_ = strconv.Atoi(lm[0])
+			var lm = strings.Split(limit, ",")
+			if len(lm) == 1 {
+				entitiesData.First, _ = strconv.Atoi(lm[0])
 				entitiesData.Skip = 0
-			} else if (len(lm) == 2) {
-				entitiesData.First,_ = strconv.Atoi(lm[0])
-				entitiesData.Skip,_ = strconv.Atoi(lm[1])		
+			} else if len(lm) == 2 {
+				entitiesData.First, _ = strconv.Atoi(lm[0])
+				entitiesData.Skip, _ = strconv.Atoi(lm[1])
 			}
 			okret = true
 		}
@@ -724,95 +718,96 @@ func GetFieldParamsFromURL(r *http.Request , entitiesData *_struct.GetTABLEAttri
 	return okret
 }
 
-func GetFIELDPayloadFromBODY(r *http.Request , entitiesData *_struct.FIELDVALUEAttributes) (bool) {
-	log.Debug("func GetFIELDPayloadFromBODY") 
+func GetFIELDPayloadFromBODY(r *http.Request, entitiesData *_struct.FIELDVALUEAttributes) bool {
+	const funcstr = "func _functions.GetFIELDPayloadFromBODY"
+
 	var xdata _struct.GetUrlPayloadAttributes
 	//body, err2 := ioutil.ReadAll(r.Body)
-    //var str string = string(body)
+	//var str string = string(body)
 	//log.Info(str)
 	err2 := json.NewDecoder(r.Body).Decode(&xdata)
-	if err2 != nil {			
-		log.WithFields(log.Fields{"Decode params to JSON": err2.Error(),	}).Error("func GetFIELDPayloadFromBODY")
+	if err2 != nil {
+		log.WithFields(log.Fields{"Decode params to JSON": err2.Error()}).Error(funcstr)
 		return false
+	} else {
+		log.WithFields(log.Fields{"Body Payload": xdata.Payload}).Debug(funcstr)
 	}
-	
+
 	entitiesData.FieldValue = xdata.Payload
 	xdata.Filter = ReplaceAritmetics(xdata.Filter)
-	
+
 	entitiesData.Filter = xdata.Filter
 	return true
 }
 
-func GetFIELDPayloadFromURL(r *http.Request , entitiesData *_struct.FIELDVALUEAttributes) (bool){
-	//  http://localhost:4488/{{.Key}}/rest/put/TSTANDORT?payload=(bez='Nürnberg2')&filter=(bez='Nürnberg1')  
+func GetFIELDPayloadFromURL(r *http.Request, entitiesData *_struct.FIELDVALUEAttributes) bool {
+	//  http://localhost:4488/{{.Key}}/rest/put/TSTANDORT?payload=(bez='Nürnberg2')&filter=(bez='Nürnberg1')
 	//  http://localhost:4488/{{.Key}}/rest/put/TSTANDORT?ftext="payload=(bez='Nürnberg2')&filter=(bez='Nürnberg1')"
 	// http://localhost:4488/{{.Key}}/rest/put/TSTANDORT?fjson={"payload":["ID='123'","BEZ='test'","GUELTIG=1"], "filter": "ID=1 AND BEZ like 'x%'"}
 
-	const funcstr = "func GetFIELDPayloadFromURL"
+	const funcstr = "func _functions.GetFIELDPayloadFromURL"
 	var u = r.URL
 	log.Debug(funcstr)
-	if(strings.HasPrefix(u.RawQuery,_struct.FormatJson)) {			
+	if strings.HasPrefix(u.RawQuery, _struct.FormatJson) {
 		var par = u.RawQuery[len(_struct.FormatJson)+1:]
 		par = _httpstuff.UnEscape(par)
-		if(len(par) > 0) {
+		if len(par) > 0 {
 			xdata := &_struct.GetUrlPayloadAttributes{}
 			err := json.Unmarshal([]byte(par), &xdata)
-			if(err != nil) {
+			if err != nil {
 				return false
 			}
 			log.Info("xdata")
 			log.Info(xdata)
 			for _, vals := range xdata.Payload {
-				entitiesData.FieldValue = append(entitiesData.FieldValue,vals)
+				entitiesData.FieldValue = append(entitiesData.FieldValue, vals)
 			}
 			entitiesData.Filter = xdata.Filter
 			return true
 		}
 	}
-	
 
 	var s = _httpstuff.UnEscape(u.RawQuery)
 
-	var pars = strings.Split(s,"&")
+	var pars = strings.Split(s, "&")
 	var okret bool
-	log.Debug(funcstr+"->pars")
+	log.Debug(funcstr + "->pars")
 	log.Debug(pars)
 	for _, par := range pars {
-		if(strings.HasPrefix(par,_struct.Filter+"=")){
+		if strings.HasPrefix(par, _struct.Filter+"=") {
 			var par = par[len(_struct.Filter)+1:]
-			if(par[:1] == "(") {
-				entitiesData.Filter = par[1:len(par)-1]
+			if par[:1] == "(" {
+				entitiesData.Filter = par[1 : len(par)-1]
 			} else {
 				entitiesData.Filter = par
 			}
 			entitiesData.Filter = ReplaceAritmetics(entitiesData.Filter)
 			okret = true
-		} else if(strings.HasPrefix(par,_struct.Payload+"=")){
-			var pars = par[len(_struct.Payload)+1:]		
+		} else if strings.HasPrefix(par, _struct.Payload+"=") {
+			var pars = par[len(_struct.Payload)+1:]
 			var st string = pars[:1]
-			log.Debug(funcstr+"->st:"+st)
-			if(st == "(") {
+			log.Debug(funcstr + "->st:" + st)
+			if st == "(" {
 				pars = pars[1:]
-			}	
-			log.Debug(funcstr+"->pars:"+pars)
-			st = pars[len(pars)-1:]	
-			log.Debug(funcstr+"->st:"+st)
-			if(st == ")") {
+			}
+			log.Debug(funcstr + "->pars:" + pars)
+			st = pars[len(pars)-1:]
+			log.Debug(funcstr + "->st:" + st)
+			if st == ")" {
 				pars = pars[:len(pars)-1]
 			}
-			log.Debug(funcstr+"->pars:"+pars)
+			log.Debug(funcstr + "->pars:" + pars)
 			//keyval :=  strings.SplitN(pars,",",-1)
-			keyval :=  SplitPars(pars,",")
-	
+			keyval := SplitPars(pars, ",")
+
 			for _, pars := range keyval {
-				entitiesData.FieldValue = append(entitiesData.FieldValue,pars)	
+				entitiesData.FieldValue = append(entitiesData.FieldValue, pars)
 			}
-			
+
 			okret = true
-		
+
 		}
 	}
 
-   
 	return okret
 }

@@ -1,11 +1,13 @@
-package _dbscheme
+package dbscheme
 
 import (
 	"encoding/xml"
-	"sync"
+	_apperrors "fbrest/FBxRESTCore/apperrors"
+	_struct "fbrest/FBxRESTCore/struct"
 	"io/ioutil"
 	"strconv"
-	_apperrors "fbrest/FBxRESTCore/apperrors"
+	"sync"
+
 	log "github.com/sirupsen/logrus"
 )
 
@@ -65,7 +67,7 @@ type DBSchemes struct {
 }
 
 func (r *repository) Add(name string, key string, user string, password string, database string, location string, port int) (ky DatabaseAttributes) {
-	
+
 	const funcstr = "func _dbscheme.Add"
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -79,21 +81,21 @@ func (r *repository) Add(name string, key string, user string, password string, 
 	data.Port = port
 
 	r.datas[key] = data
-		
+
 	log.WithFields(log.Fields{"key": key}).Debug(funcstr)
-	
+
 	return data
 }
 
 func (r *repository) Delete(token string) {
-	
-	const funcstr = "func _dbscheme.Delete"	
+
+	const funcstr = "func _dbscheme.Delete"
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	delete(r.datas, token)
-	
-	log.WithFields(log.Fields{"token": token}).Debug(funcstr)
-	
+
+	log.WithFields(log.Fields{_struct.SessionTokenStr: token}).Debug(funcstr)
+
 }
 
 func (r *repository) Get(token string) (item DatabaseAttributes, err error) {
@@ -103,10 +105,10 @@ func (r *repository) Get(token string) (item DatabaseAttributes, err error) {
 	item, ok := r.datas[token]
 	if !ok {
 		err = _apperrors.ErrPermissionKeyNotFound
-		log.WithFields(log.Fields{DBSchemeKeyStr + " not found": token}).Debug(funcstr + " " + DBSchemeKeyStr)
+		log.WithFields(log.Fields{DBSchemeKeyStr + " not found": token}).Debug(funcstr)
 		return item, err
 	}
-	log.WithFields(log.Fields{DBSchemeKeyStr + " found": token}).Debug(funcstr + " " + DBSchemeKeyStr)
+	log.WithFields(log.Fields{DBSchemeKeyStr + " found": token}).Debug(funcstr)
 	return item, nil
 }
 
@@ -114,10 +116,8 @@ func (r *repository) Exists(token string) bool {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 	_, ok := r.datas[token]
-	if !ok {
-		return false
-	}
-	return true
+
+	return ok
 }
 
 var (
@@ -134,8 +134,8 @@ func Repository() *repository {
 }
 
 func GetSchemeFromRepository(dbscheme string) (perm DatabaseAttributes, err error) {
-	const funcstr = "func _dbscheme.ReadDBScheme"	
-	log.WithFields(log.Fields{"dbscheme": dbscheme}).Debug(funcstr)	
+	const funcstr = "func _dbscheme.GetSchemeFromRepository"
+	log.WithFields(log.Fields{"dbscheme": dbscheme}).Debug(funcstr)
 	var rep = Repository()
 	var result, err1 = rep.Get(dbscheme)
 	if err1 != nil {
@@ -145,11 +145,11 @@ func GetSchemeFromRepository(dbscheme string) (perm DatabaseAttributes, err erro
 }
 
 func ReadDBScheme(pfile string) {
-	const funcstr = "func _dbscheme.ReadDBScheme"	
-	log.WithFields(log.Fields{"pfile": pfile}).Debug(funcstr)	
+	const funcstr = "func _dbscheme.ReadDBScheme"
+	log.WithFields(log.Fields{"pfile": pfile}).Debug(funcstr)
 	data, err := ioutil.ReadFile(pfile)
 	if err != nil {
-		log.WithFields(log.Fields{"File reading error": err}).Error("funcstr")
+		log.WithFields(log.Fields{"File reading error": err}).Error(funcstr)
 		return
 	}
 	xdata := &DBSchemes{}

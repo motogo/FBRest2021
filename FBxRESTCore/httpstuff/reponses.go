@@ -1,10 +1,9 @@
 package _httpstuff
 
 import (
-		
-	"net/url"
-	"net/http"
 	"encoding/json"
+	"net/http"
+	"net/url"
 	"strings"
 )
 

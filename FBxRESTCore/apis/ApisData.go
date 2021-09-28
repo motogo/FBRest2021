@@ -1,20 +1,21 @@
 package apis
 
 import (
-	"fbrest/FBxRESTCore/config"
-	"fbrest/FBxRESTCore/models"	
-	"strconv"	
-	"strings"
-	_struct "fbrest/FBxRESTCore/struct"
-	_functions "fbrest/FBxRESTCore/functions"
-	_sessions "fbrest/FBxRESTCore/sessions"
-	_permissions "fbrest/FBxRESTCore/permissions"
-	_httpstuff "fbrest/FBxRESTCore/httpstuff"
 	_apperrors "fbrest/FBxRESTCore/apperrors"
+	"fbrest/FBxRESTCore/config"
 	_dbscheme "fbrest/FBxRESTCore/dbscheme"
+	_functions "fbrest/FBxRESTCore/functions"
+	_httpstuff "fbrest/FBxRESTCore/httpstuff"
+	"fbrest/FBxRESTCore/models"
+	_permissions "fbrest/FBxRESTCore/permissions"
+	_sessions "fbrest/FBxRESTCore/sessions"
+	_struct "fbrest/FBxRESTCore/struct"
 	"net/http"
-	log "github.com/sirupsen/logrus"	
+	"strconv"
+	"strings"
+
 	bguuid "github.com/kjk/betterguid"
+	log "github.com/sirupsen/logrus"
 )
 
 func TestDBOpenClose(response http.ResponseWriter, r *http.Request) {
@@ -154,7 +155,7 @@ func DeleteSessionKey(response http.ResponseWriter, r *http.Request) {
 	var rep = _sessions.Repository() 
 	rep.Delete(key)
 	Response.Status  = http.StatusOK
-	Response.Message = "Deleted " + _sessions.SessionTokenStr
+	Response.Message = "Deleted " + _struct.SessionTokenStr
 	Response.Data    =  key
 	_httpstuff.RestponWithJson(response, http.StatusOK, Response)			
 }

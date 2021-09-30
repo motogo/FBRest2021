@@ -126,24 +126,12 @@ func GetPermissionFromRepository(userkey string, userpassword string, dbscheme s
 		return result, err1
 	}
 
-	//if(n(result.Type) < 1) {
-	//	result.Type = None
-	//}
-	/*
-		if(len(result.DBUser) < 1) {
-			result.DBUser = result.UserKey
-		}
-
-		if(len(result.DBPassword) < 1) {
-			result.DBPassword = result.UserPassword
-		}
-	*/
 	return result, err
 }
 
 func ReadPermissions(pfile string) {
 	const funcstr = "func Permissions.ReadPermissions"
-	log.WithFields(log.Fields{pfile: pfile}).Debug(funcstr)
+	log.WithFields(log.Fields{"Permission file": pfile}).Debug(funcstr) 
 
 	data, err := ioutil.ReadFile(pfile)
 	if err != nil {

@@ -22,7 +22,7 @@ type DatabaseAttributes struct {
 }
 
 func WriteDefaultDBScheme(pfile string) {
-	const funcstr = "func _dbscheme.WriteDefaultDBScheme"
+	const funcstr = "func dbscheme.WriteDefaultDBScheme"
 	log.WithFields(log.Fields{"pfile": pfile}).Debug(funcstr)
 	var dataarr []DatabaseAttributes
 	var data DatabaseAttributes
@@ -68,7 +68,7 @@ type DBSchemes struct {
 
 func (r *repository) Add(name string, key string, user string, password string, database string, location string, port int) (ky DatabaseAttributes) {
 
-	const funcstr = "func _dbscheme.Add"
+	const funcstr = "func dbscheme.Add"
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	var data DatabaseAttributes
@@ -99,7 +99,7 @@ func (r *repository) Delete(token string) {
 }
 
 func (r *repository) Get(token string) (item DatabaseAttributes, err error) {
-	const funcstr = "func _dbscheme.Add"
+	const funcstr = "func dbscheme.Add"
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 	item, ok := r.datas[token]
@@ -134,7 +134,7 @@ func Repository() *repository {
 }
 
 func GetSchemeFromRepository(dbscheme string) (perm DatabaseAttributes, err error) {
-	const funcstr = "func _dbscheme.GetSchemeFromRepository"
+	const funcstr = "func dbscheme.GetSchemeFromRepository"
 	log.WithFields(log.Fields{"dbscheme": dbscheme}).Debug(funcstr)
 	var rep = Repository()
 	var result, err1 = rep.Get(dbscheme)
@@ -145,7 +145,7 @@ func GetSchemeFromRepository(dbscheme string) (perm DatabaseAttributes, err erro
 }
 
 func ReadDBScheme(pfile string) {
-	const funcstr = "func _dbscheme.ReadDBScheme"
+	const funcstr = "func dbscheme.ReadDBScheme"
 	log.WithFields(log.Fields{"pfile": pfile}).Debug(funcstr)
 	data, err := ioutil.ReadFile(pfile)
 	if err != nil {
@@ -159,7 +159,7 @@ func ReadDBScheme(pfile string) {
 		if len(xd.Key) > 0 {
 			if !rep.Exists(xd.Key) {
 				var itm = rep.Add(xd.Name, xd.Key, xd.User, xd.Password, xd.Database, xd.Location, xd.Port)
-				log.WithFields(log.Fields{"Added dbscheme": "Name:" + itm.Name + " Key:" + itm.Key + " User:" + itm.User + " Port:" + strconv.Itoa(itm.Port) + " Database:" + itm.Database + " Location:" + itm.Location}).Debug(funcstr)
+				log.WithFields(log.Fields{"Added dbscheme": "Name:" + itm.Name + " " + _struct.SessionTokenStr + ":" + itm.Key + " User:" + itm.User + " Port:" + strconv.Itoa(itm.Port) + " Database:" + itm.Database + " Location:" + itm.Location}).Debug(funcstr)
 			}
 		}
 	}

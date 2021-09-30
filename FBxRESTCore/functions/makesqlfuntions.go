@@ -79,10 +79,11 @@ func MakeInsertTableSQL(entitiesData _struct.FIELDVALUEAttributes) (cmd string) 
 	//log.WithFields(log.Fields{"FieldValue": entitiesData.FieldValue}).Debug(funcStr)
 
 	for _, fv := range entitiesData.FieldValue {
-		log.WithFields(log.Fields{"FieldValue": fv}).Debug(funcStr)
+		//log.WithFields(log.Fields{"FieldValue": fv}).Debug(funcStr)
 		//var par = stings.Split(fv,csplit)
 		var par = SplitPars(fv, csplit)
-		log.Debug(par)
+		//log.Debug(par)
+		log.WithFields(log.Fields{"FieldValue": par}).Debug(funcStr)
 		if len(par) > 1 {
 			if len(cmdcol) > 0 {
 				cmdcol = cmdcol + " , "
@@ -97,6 +98,7 @@ func MakeInsertTableSQL(entitiesData _struct.FIELDVALUEAttributes) (cmd string) 
 
 	var id = guuid.New().String()
 	cmd = cmdHead + "(ID," + cmdcol + ") VALUES ('" + id + "'," + cmdval + ")"
+
 	return
 }
 

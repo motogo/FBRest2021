@@ -24,7 +24,7 @@ import (
 //Returns respone for HTML site of FBRest usage
 func ResponseHelpHTML(w http.ResponseWriter, code int) {
 
-	const funcstr = "func _functions.ResponseHelpHTML"
+	const funcstr = "func Functions.ResponseHelpHTML"
 	log.Debug(funcstr)
 	profile := _struct.Profile{Appname: config.AppName, Version: config.Version, Copyright: config.Copyright, Key: "-MNhE7Yf50sz6U9Hgqae", Duration: _sessions.MaxDuration}
 	fp := path.Join("templates", "index.html")
@@ -52,7 +52,7 @@ func ResponseHelpDesignHTML(w http.ResponseWriter, code int) {
 		m, _, err := image.Decode(reader)
 		defer reader.Close()
 	*/
-	const funcstr = "func _functions.ResponseHelpDesignHTML"
+	const funcstr = "func Functions.ResponseHelpDesignHTML"
 	log.Debug(funcstr)
 	profile := _struct.Profile{Appname: config.AppName, Version: config.Version, Copyright: config.Copyright, Key: "-MNhE7Yf50sz6U9Hgqae", Duration: _sessions.MaxDuration}
 	fp := path.Join("templates", "design.html")
@@ -67,7 +67,7 @@ func ResponseHelpDesignHTML(w http.ResponseWriter, code int) {
 	}
 }
 func ResponseHelpCommandsHTML(w http.ResponseWriter, code int) {
-	const funcstr = "func _functions.ResponseHelpCommandsHTML"
+	const funcstr = "func Functions.ResponseHelpCommandsHTML"
 	log.Debug(funcstr)
 	profile := _struct.Profile{Appname: config.AppName, Version: config.Version, Copyright: config.Copyright, Key: "-MNhE7Yf50sz6U9Hgqae", Duration: _sessions.MaxDuration}
 	fp := path.Join("templates", "commands.html")
@@ -83,7 +83,7 @@ func ResponseHelpCommandsHTML(w http.ResponseWriter, code int) {
 }
 
 func ResponseInfoBusyText(w http.ResponseWriter, code int) {
-	const funcstr = "func _functions.ResponseInfoBusyText"
+	const funcstr = "func Functions.ResponseInfoBusyText"
 	log.Debug(funcstr)
 	profile := _struct.Profile{Appname: config.AppName, Version: config.Version, Copyright: config.Copyright, Key: "-MNhE7Yf50sz6U9Hgqae", Duration: _sessions.MaxDuration}
 	fp := path.Join("templates", "busy.html")
@@ -99,7 +99,7 @@ func ResponseInfoBusyText(w http.ResponseWriter, code int) {
 }
 
 func OutParameters(entitiesData _struct.SQLAttributes) {
-	const funcstr = "func _functions.OutParameters"
+	const funcstr = "func Functions.OutParameters"
 	log.Debug(funcstr)
 
 	log.WithFields(log.Fields{"Given command     ": entitiesData.Cmd}).Info("")
@@ -108,7 +108,7 @@ func OutParameters(entitiesData _struct.SQLAttributes) {
 }
 
 func OutTableParameters(entitiesData _struct.GetTABLEAttributes) {
-	const funcstr = "func _functions.OutTableParameters"
+	const funcstr = "func Functions.OutTableParameters"
 	log.Debug(funcstr)
 
 	log.WithFields(log.Fields{"Given fields      ": entitiesData.Fields}).Info("")
@@ -119,7 +119,7 @@ func OutTableParameters(entitiesData _struct.GetTABLEAttributes) {
 }
 
 func GetSQLParamsFromBODY(r *http.Request, entitiesData *_struct.SQLAttributes) bool {
-	const funcstr = "func _functions.GetSQLParamsFromBODY"
+	const funcstr = "func Functions.GetSQLParamsFromBODY"
 	log.WithFields(log.Fields{"body": r.Body}).Debug(funcstr)
 	var xdata _struct.GetUrlSQLAttributes
 	err2 := json.NewDecoder(r.Body).Decode(&xdata)
@@ -133,7 +133,7 @@ func GetSQLParamsFromBODY(r *http.Request, entitiesData *_struct.SQLAttributes) 
 }
 
 func GetTableParamsFromBODY(r *http.Request, entitiesData *_struct.GetTABLEAttributes) (ok bool) {
-	const funcstr = "func _functions.GetTableParamsFromBODY"
+	const funcstr = "func Functions.GetTableParamsFromBODY"
 	log.WithFields(log.Fields{"body": r.Body}).Debug(funcstr)
 
 	var xdata _struct.GetUrlTABLEAttributes
@@ -152,7 +152,7 @@ func GetTableParamsFromBODY(r *http.Request, entitiesData *_struct.GetTABLEAttri
 }
 
 func GetFieldParamsFromBODY(r *http.Request, entitiesData *_struct.GetTABLEAttributes) (ok bool) {
-	const funcstr = "func _functions.GetFieldParamsFromBODY"
+	const funcstr = "func Functions.GetFieldParamsFromBODY"
 	log.WithFields(log.Fields{"body": r.Body}).Debug(funcstr)
 
 	var xdata _struct.GetUrlTABLEAttributes
@@ -171,7 +171,7 @@ func GetFieldParamsFromBODY(r *http.Request, entitiesData *_struct.GetTABLEAttri
 }
 
 func GetSQLParamsFromURL(r *http.Request, entitiesData *_struct.SQLAttributes) (ok bool) {
-	const funcstr = "func _functions.GetSQLParamsFromURL"
+	const funcstr = "func Functions.GetSQLParamsFromURL"
 
 	log.WithFields(log.Fields{"url": r.URL}).Debug(funcstr)
 
@@ -228,7 +228,7 @@ func GetSQLParamsFromURL(r *http.Request, entitiesData *_struct.SQLAttributes) (
 }
 
 func GetSessionParamsFromBODY(r *http.Request, entitiesData *_dbscheme.DatabaseAttributes) bool {
-	const funcstr = "func _functions.GetSessionParamsFromBODY"
+	const funcstr = "func Functions.GetSessionParamsFromBODY"
 	log.Debug(funcstr)
 	var xdata _dbscheme.DatabaseAttributes
 
@@ -248,7 +248,7 @@ func GetSessionParamsFromBODY(r *http.Request, entitiesData *_dbscheme.DatabaseA
 }
 
 func GetSessionSchemeParamsFromBODY(r *http.Request, entitiesData *_dbscheme.GetUrlSessionSchemeAttributes) bool {
-	const funcstr = "func _functions.GetSessionSchemeParamsFromBODY"
+	const funcstr = "func Functions.GetSessionSchemeParamsFromBODY"
 	log.Debug(funcstr)
 	var xdata _dbscheme.GetUrlSessionSchemeAttributes
 
@@ -267,7 +267,7 @@ func GetSessionSchemeParamsFromBODY(r *http.Request, entitiesData *_dbscheme.Get
 
 func GetSessionParamsFromURL(r *http.Request, entitiesData *_dbscheme.DatabaseAttributes) bool {
 
-	const funcstr = "func _functions.GetSessionParamsFromURL"
+	const funcstr = "func Functions.GetSessionParamsFromURL"
 
 	var u = r.URL
 	if strings.HasPrefix(u.RawQuery, _struct.FormatJson) {
@@ -360,7 +360,7 @@ func GetSessionParamsFromURL(r *http.Request, entitiesData *_dbscheme.DatabaseAt
 
 func GetSessionSchemeParamsFromURL(r *http.Request, entitiesData *_dbscheme.GetUrlSessionSchemeAttributes) bool {
 
-	const funcstr = "func _functions.GetSessionSchemeParamsFromURL"
+	const funcstr = "func Functions.GetSessionSchemeParamsFromURL"
 
 	var u = r.URL
 	if strings.HasPrefix(u.RawQuery, _struct.FormatJson) {
@@ -431,7 +431,7 @@ func GetFIELDPayloadFromString2(params string, entitiesData *_struct.FIELDVALUEA
 
 	// payload=(id:1, username: 'admin', email: 'email@example.org')
 
-	const funcstr = "func _functions.GetFIELDPayloadFromString"
+	const funcstr = "func Functions.GetFIELDPayloadFromString"
 	var psplit = "&"
 	var csplit = "="
 	var par = strings.Split(params, psplit)
@@ -457,7 +457,7 @@ func GetFIELDPayloadFromString2(params string, entitiesData *_struct.FIELDVALUEA
 
 func GetSQLParamsFromString2(params string, entitiesData *_struct.SQLAttributes) {
 
-	const funcstr = "func _functions.GetSQLParamsFromString2"
+	const funcstr = "func Functions.GetSQLParamsFromString2"
 	var csplit = "="
 	var par = params
 
@@ -477,15 +477,15 @@ func GetSQLParamsFromString2(params string, entitiesData *_struct.SQLAttributes)
 			entitiesData.Sepfill = cmd[:1]
 			cmd = cmd[1:]
 			cmd = strings.ReplaceAll(cmd, entitiesData.Sepfill, " ")
-			log.WithFields(log.Fields{"Sepfill": entitiesData.Sepfill}).Debug(funcstr + "->set key")
+			log.WithFields(log.Fields{"Sepfill": entitiesData.Sepfill}).Debug(funcstr)
 		}
 
-		log.WithFields(log.Fields{"Cmd": cmd}).Debug(funcstr + "->set key")
+		log.WithFields(log.Fields{"Set CMD": cmd}).Debug(funcstr)
 		entitiesData.Cmd = cmd
 	}
 
 	if strings.EqualFold(string(keyval[0]), string("INFO")) {
-		log.WithFields(log.Fields{"Info": string(keyval[1])}).Debug(funcstr + "->set key")
+		log.WithFields(log.Fields{"Set INFO": string(keyval[1])}).Debug(funcstr)
 		entitiesData.Info = string(keyval[1])
 	}
 
@@ -494,19 +494,19 @@ func GetSQLParamsFromString2(params string, entitiesData *_struct.SQLAttributes)
 //Returns the last-nLeft slice from URL
 //e.g. when nLeft == 0 returns the last slice
 func GetRightPathSliceFromURL(r *http.Request, nLeft int) (key string) {
-	const funcstr = "func _functions.GetRightPathSliceFromURL"
+	const funcstr = "func Functions.GetRightPathSliceFromURL"
 	urlstr := string(r.URL.String())
 	var keyval = strings.SplitN(urlstr, "?", 2)
 
 	urlstr = keyval[0]
 	t2 := strings.Split(urlstr, "/")
 	key = t2[len(t2)-1-nLeft]
-	log.WithFields(log.Fields{_struct.SessionTokenStr: key}).Debug(funcstr)
+	log.WithFields(log.Fields{_struct.URLKeyStr: key}).Debug(funcstr)
 	return key
 }
 
 func GetLeftPathSliceFromURL(r *http.Request, nLeft int) (key string) {
-	const funcstr = "func _functions.GetLeftPathSliceFromURL"
+	const funcstr = "func Functions.GetLeftPathSliceFromURL"
 	urlstr := string(r.URL.String())
 	var keyval = strings.SplitN(urlstr, "?", 2)
 
@@ -514,7 +514,7 @@ func GetLeftPathSliceFromURL(r *http.Request, nLeft int) (key string) {
 
 	t2 := strings.Split(urlstr, "/")
 	key = t2[nLeft+1]
-	log.WithFields(log.Fields{_struct.SessionTokenStr: key}).Debug(funcstr)
+	log.WithFields(log.Fields{_struct.URLKeyStr: key}).Debug(funcstr)
 	return key
 }
 
@@ -522,7 +522,7 @@ func GetTableParamsFromURL(r *http.Request, entitiesData *_struct.GetTABLEAttrib
 
 	//  http://localhost:4488/{{.Key}}/rest/get/TSTANDORT?fjson={"table": "TSTANDORT","fields": ["ID","BEZ","GUELTIG"],"filter":"ID=1 AND BEZ like 'x%'","order": ["BEZ ASC","ID DESC"],"groupby": ["ID","BEZ"],"first": 0}
 
-	//const funcstr = "func functions.GetTableParamsFromURL"
+	//const funcstr = "func Functions.GetTableParamsFromURL"
 
 	var u = r.URL
 
@@ -719,7 +719,7 @@ func GetFieldParamsFromURL(r *http.Request, entitiesData *_struct.GetTABLEAttrib
 }
 
 func GetFIELDPayloadFromBODY(r *http.Request, entitiesData *_struct.FIELDVALUEAttributes) bool {
-	const funcstr = "func _functions.GetFIELDPayloadFromBODY"
+	const funcstr = "func Functions.GetFIELDPayloadFromBODY"
 
 	var xdata _struct.GetUrlPayloadAttributes
 	//body, err2 := ioutil.ReadAll(r.Body)
@@ -745,7 +745,7 @@ func GetFIELDPayloadFromURL(r *http.Request, entitiesData *_struct.FIELDVALUEAtt
 	//  http://localhost:4488/{{.Key}}/rest/put/TSTANDORT?ftext="payload=(bez='Nürnberg2')&filter=(bez='Nürnberg1')"
 	// http://localhost:4488/{{.Key}}/rest/put/TSTANDORT?fjson={"payload":["ID='123'","BEZ='test'","GUELTIG=1"], "filter": "ID=1 AND BEZ like 'x%'"}
 
-	const funcstr = "func _functions.GetFIELDPayloadFromURL"
+	const funcstr = "func Functions.GetFIELDPayloadFromURL"
 	var u = r.URL
 	log.Debug(funcstr)
 	if strings.HasPrefix(u.RawQuery, _struct.FormatJson) {
@@ -757,8 +757,9 @@ func GetFIELDPayloadFromURL(r *http.Request, entitiesData *_struct.FIELDVALUEAtt
 			if err != nil {
 				return false
 			}
-			log.Info("xdata")
-			log.Info(xdata)
+
+			log.WithFields(log.Fields{"xdata": xdata}).Debug(funcstr)
+
 			for _, vals := range xdata.Payload {
 				entitiesData.FieldValue = append(entitiesData.FieldValue, vals)
 			}
@@ -771,8 +772,9 @@ func GetFIELDPayloadFromURL(r *http.Request, entitiesData *_struct.FIELDVALUEAtt
 
 	var pars = strings.Split(s, "&")
 	var okret bool
-	log.Debug(funcstr + "->pars")
-	log.Debug(pars)
+
+	log.WithFields(log.Fields{"Parameters": pars}).Debug(funcstr)
+
 	for _, par := range pars {
 		if strings.HasPrefix(par, _struct.Filter+"=") {
 			var par = par[len(_struct.Filter)+1:]
@@ -786,17 +788,18 @@ func GetFIELDPayloadFromURL(r *http.Request, entitiesData *_struct.FIELDVALUEAtt
 		} else if strings.HasPrefix(par, _struct.Payload+"=") {
 			var pars = par[len(_struct.Payload)+1:]
 			var st string = pars[:1]
-			log.Debug(funcstr + "->st:" + st)
+
+			//log.WithFields(log.Fields{"st": st}).Debug(funcstr)
 			if st == "(" {
 				pars = pars[1:]
 			}
-			log.Debug(funcstr + "->pars:" + pars)
+			//log.Debug(funcstr + "->pars:" + pars)
 			st = pars[len(pars)-1:]
-			log.Debug(funcstr + "->st:" + st)
+			//log.Debug(funcstr + "->st:" + st)
 			if st == ")" {
 				pars = pars[:len(pars)-1]
 			}
-			log.Debug(funcstr + "->pars:" + pars)
+			//log.Debug(funcstr + "->pars:" + pars)
 			//keyval :=  strings.SplitN(pars,",",-1)
 			keyval := SplitPars(pars, ",")
 

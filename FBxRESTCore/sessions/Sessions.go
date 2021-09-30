@@ -1,4 +1,4 @@
-package _sessions
+package sessions
 
 import (
 	"encoding/xml"
@@ -97,7 +97,7 @@ func GetTokenDataFromRepository(token string) (kval Item) {
 func TokenValid(response http.ResponseWriter, key string) (kv Item) {
 	const funcStr = "func Sessions.TokenValid"
 
-	log.WithFields(log.Fields{key: key}).Debug(funcStr)
+	log.WithFields(log.Fields{_struct.SessionTokenStr: key}).Debug(funcStr)
 
 	var Response _struct.ResponseData
 	kv = GetTokenDataFromRepository(key)
@@ -126,7 +126,8 @@ func TokenValid(response http.ResponseWriter, key string) (kv Item) {
 
 		return kv
 	}
-	log.WithFields(log.Fields{"Session vaild->remaining " + _struct.SessionTokenStr + " duration (s)": (duration - difference)}).Debug(funcStr)
+	var t = kv.Start.Add(kv.Duration)
+	log.WithFields(log.Fields{"Session valid unitl " + t.Format(time.RFC822Z) + "->remaining " + _struct.SessionTokenStr + " duration (s)": (duration - difference)}).Debug(funcStr)
 	kv.Valid = true
 	return kv
 }
@@ -160,8 +161,8 @@ func WritePermanantSessions(pfile string) {
 
 func ReadPermanantSessions(pfile string) {
 
-	const funcStr = "func Sessions.ReadPermanantSessions"
-	log.WithFields(log.Fields{pfile: pfile}).Debug(funcStr)
+	const funcStr = "func Sessions.ReadPermanentSessions"
+	log.WithFields(log.Fields{"SessionFile": pfile}).Debug(funcStr)
 
 	dataarr, err := ioutil.ReadFile(pfile)
 	if err != nil {
@@ -184,8 +185,8 @@ func ReadPermanantSessions(pfile string) {
 		log.WithFields(log.Fields{"Ends           ": t}).Debug(funcStr)
 		log.Debug(" ")
 		g1 := t.Before(now)
-		if g1 == true {
-			log.WithFields(log.Fields{"Token " + pars.Token + " has exceeded date/time ": t}).Error(funcStr)
+		if g1 {
+			log.WithFields(log.Fields{_struct.SessionTokenStr + " " + pars.Token + " has exceeded date/time ": t}).Error(funcStr)
 			log.Debug(" ")
 		}
 

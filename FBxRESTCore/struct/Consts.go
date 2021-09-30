@@ -11,4 +11,5 @@ const (
 	Payload    string = "payload"
 )
 
-const SessionTokenStr = "session token"
+const SessionTokenStr = "Session token"
+const URLKeyStr = "URL key"

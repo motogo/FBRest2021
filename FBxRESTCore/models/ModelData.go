@@ -3,10 +3,10 @@ package models
 import (
 	"database/sql"
 
-	"null"
-
 	"encoding/json"
 	_struct "fbrest/FBxRESTCore/struct"
+	"fmt"
+	"null"
 	"runtime"
 	"strconv"
 	"time"
@@ -30,20 +30,26 @@ func bToMb(b uint64) uint64 {
 	return b / 1024 / 1024
 }
 
+func RString(b string, l int) string {
+	var ft string = "%-" + strconv.Itoa(l) + "s"
+	return fmt.Sprintf(ft, b)
+}
+
 func outMem(inf1, funcstr string) {
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
 	log.Debug(" ")
 	//log.WithFields(log.Fields{inf1: m.Sys,	})        .Debug(funcstr+"->used total bytes system memory")
-	log.WithFields(log.Fields{inf1: bToMb(m.Sys)}).Debug(funcstr + "->allocated total system memory")
-	log.WithFields(log.Fields{inf1: bToMb(m.TotalAlloc)}).Debug(funcstr + "->used total heap memory       ")
-	log.WithFields(log.Fields{inf1: bToMb(m.Alloc)}).Debug(funcstr + "->allocated local heap memory  ")
-	log.WithFields(log.Fields{inf1: m.NumGC}).Debug(funcstr + "->allocated GC memory          ")
+	log.WithFields(log.Fields{fmt.Sprintf("%-10s", inf1): bToMb(m.Sys)}).Debug(RString(funcstr+"->allocated total system memory", 60))
+	log.WithFields(log.Fields{fmt.Sprintf("%-10s", inf1): bToMb(m.TotalAlloc)}).Debug(RString(funcstr+"->used total heap memory", 60))
+	log.WithFields(log.Fields{fmt.Sprintf("%-10s", inf1): bToMb(m.Alloc)}).Debug(RString(funcstr+"->allocated local heap memory", 60))
+	log.WithFields(log.Fields{fmt.Sprintf("%-10s", inf1): m.NumGC}).Debug(RString(funcstr+"->allocated GC memory", 60))
 }
 
 func (model ModelGetData) GetSQLData(cmd string) (getStruct string, err error) {
 	const funcstr = "func models.GetSQLData"
-	log.WithFields(log.Fields{"SQL command": cmd}).Debug(funcstr + "->start getting datas")
+	log.Debug(" ")
+	log.WithFields(log.Fields{"SQL command": cmd}).Debug(funcstr)
 	log.Debug(" ")
 	row, err := model.DB.Query(cmd)
 	if err != nil {
@@ -113,14 +119,14 @@ func (model ModelGetData) GetSQLData(cmd string) (getStruct string, err error) {
 		}
 		ergstr = ergstr + "]"
 		log.Debug(" ")
-		log.WithFields(log.Fields{"Numbers of rows ": strconv.Itoa(n)}).Debug(funcstr + "->got data complete       ")
+		log.WithFields(log.Fields{"Numbers of rows": strconv.Itoa(n)}).Debug(RString(funcstr+"->got data complete", 60))
 
 		outMem("Memory after Query (Mb)", funcstr)
 		runtime.GC()
-		outMem("Memory after GC     (Mb)", funcstr)
+		outMem("Memory after GC    (Mb)", funcstr)
 		log.Debug(" ")
 		elapsed := time.Since(start)
-		log.WithFields(log.Fields{"Time used  ": elapsed}).Debug(funcstr + "->used time  ")
+		log.WithFields(log.Fields{"Time used": elapsed}).Debug(RString(funcstr+"->used time", 60))
 		return ergstr, nil
 	}
 }
